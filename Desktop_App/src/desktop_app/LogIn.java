@@ -16,6 +16,7 @@ public class LogIn extends javax.swing.JFrame {
      */
     public LogIn() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -27,21 +28,191 @@ public class LogIn extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jd_registro = new javax.swing.JDialog();
+        jb_regresar_registro = new javax.swing.JButton();
+        jb_registrar_registro = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        tf_nombres_registrar = new javax.swing.JTextField();
+        tf_apellidos_registrar = new javax.swing.JTextField();
+        tf_username_registrar = new javax.swing.JTextField();
+        tf_contrasena_registrar = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        tf_login_username = new javax.swing.JTextField();
+        tf_login_password = new javax.swing.JTextField();
+        jb_login_iniciarS = new javax.swing.JButton();
+        jb_login_registrarse = new javax.swing.JButton();
+
+        jb_regresar_registro.setText("Regresar");
+        jb_regresar_registro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_regresar_registroMouseClicked(evt);
+            }
+        });
+
+        jb_registrar_registro.setText("Registrar");
+        jb_registrar_registro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_registrar_registroMouseClicked(evt);
+            }
+        });
+
+        jLabel3.setText("Nombres:");
+
+        jLabel4.setText("Apellidos:");
+
+        jLabel5.setText("Usuario:");
+
+        jLabel6.setText("Contraseña:");
+
+        tf_contrasena_registrar.setEditable(false);
+
+        javax.swing.GroupLayout jd_registroLayout = new javax.swing.GroupLayout(jd_registro.getContentPane());
+        jd_registro.getContentPane().setLayout(jd_registroLayout);
+        jd_registroLayout.setHorizontalGroup(
+            jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_registroLayout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jd_registroLayout.createSequentialGroup()
+                        .addComponent(jb_registrar_registro)
+                        .addGap(58, 58, 58)
+                        .addComponent(jb_regresar_registro))
+                    .addGroup(jd_registroLayout.createSequentialGroup()
+                        .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tf_nombres_registrar)
+                            .addComponent(tf_apellidos_registrar)
+                            .addComponent(tf_username_registrar, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addComponent(tf_contrasena_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(177, Short.MAX_VALUE))
+        );
+        jd_registroLayout.setVerticalGroup(
+            jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_registroLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(tf_nombres_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(tf_apellidos_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(tf_username_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(tf_contrasena_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_registrar_registro)
+                    .addComponent(jb_regresar_registro))
+                .addGap(56, 56, 56))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Usuario:");
+
+        jLabel2.setText("Contraseña:");
+
+        jb_login_iniciarS.setText("Iniciar Sesión");
+
+        jb_login_registrarse.setText("Registrarse");
+        jb_login_registrarse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_login_registrarseMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 615, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tf_login_username)
+                            .addComponent(tf_login_password, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(jb_login_iniciarS)
+                        .addGap(42, 42, 42)
+                        .addComponent(jb_login_registrarse)))
+                .addContainerGap(217, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 377, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(127, 127, 127)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(tf_login_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(tf_login_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_login_iniciarS)
+                    .addComponent(jb_login_registrarse))
+                .addGap(70, 70, 70))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jb_login_registrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_login_registrarseMouseClicked
+        this.setVisible(false);
+        tf_contrasena_registrar.setText("shhh");
+        
+        jd_registro.pack();
+        jd_registro.setModal(true);
+        jd_registro.setLocationRelativeTo(this);
+        jd_registro.setVisible(true);
+        tf_login_username.setText("");
+        tf_login_password.setText("");
+        
+    }//GEN-LAST:event_jb_login_registrarseMouseClicked
+
+    private void jb_regresar_registroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresar_registroMouseClicked
+        tf_nombres_registrar.setText("");
+        tf_apellidos_registrar.setText("");
+        tf_username_registrar.setText("");
+        tf_contrasena_registrar.setText("");
+        this.setVisible(true);
+        jd_registro.dispose();
+        
+    }//GEN-LAST:event_jb_regresar_registroMouseClicked
+
+    private void jb_registrar_registroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_registrar_registroMouseClicked
+        /*
+        verificación de datos
+        */
+        tf_nombres_registrar.setText("");
+        tf_apellidos_registrar.setText("");
+        tf_username_registrar.setText("");
+        tf_contrasena_registrar.setText("");
+        this.setVisible(true);
+        jd_registro.dispose();
+    }//GEN-LAST:event_jb_registrar_registroMouseClicked
 
     /**
      * @param args the command line arguments
@@ -79,5 +250,22 @@ public class LogIn extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JButton jb_login_iniciarS;
+    private javax.swing.JButton jb_login_registrarse;
+    private javax.swing.JButton jb_registrar_registro;
+    private javax.swing.JButton jb_regresar_registro;
+    private javax.swing.JDialog jd_registro;
+    private javax.swing.JTextField tf_apellidos_registrar;
+    private javax.swing.JTextField tf_contrasena_registrar;
+    private javax.swing.JTextField tf_login_password;
+    private javax.swing.JTextField tf_login_username;
+    private javax.swing.JTextField tf_nombres_registrar;
+    private javax.swing.JTextField tf_username_registrar;
     // End of variables declaration//GEN-END:variables
 }
