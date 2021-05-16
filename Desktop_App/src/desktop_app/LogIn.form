@@ -112,9 +112,6 @@
         <Component class="javax.swing.JTextField" name="tf_username_registrar">
         </Component>
         <Component class="javax.swing.JTextField" name="tf_contrasena_registrar">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -208,6 +205,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Iniciar Sesi&#xf3;n"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_login_iniciarSMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jb_login_registrarse">
       <Properties>

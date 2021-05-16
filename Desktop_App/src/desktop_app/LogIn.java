@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package desktop_app;
+import java.security.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -68,8 +73,6 @@ public class LogIn extends javax.swing.JFrame {
 
         jLabel6.setText("Contraseña:");
 
-        tf_contrasena_registrar.setEditable(false);
-
         javax.swing.GroupLayout jd_registroLayout = new javax.swing.GroupLayout(jd_registro.getContentPane());
         jd_registro.getContentPane().setLayout(jd_registroLayout);
         jd_registroLayout.setHorizontalGroup(
@@ -128,6 +131,11 @@ public class LogIn extends javax.swing.JFrame {
         jLabel2.setText("Contraseña:");
 
         jb_login_iniciarS.setText("Iniciar Sesión");
+        jb_login_iniciarS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_login_iniciarSMouseClicked(evt);
+            }
+        });
 
         jb_login_registrarse.setText("Registrarse");
         jb_login_registrarse.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -181,8 +189,6 @@ public class LogIn extends javax.swing.JFrame {
 
     private void jb_login_registrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_login_registrarseMouseClicked
         this.setVisible(false);
-        tf_contrasena_registrar.setText("shhh");
-        
         jd_registro.pack();
         jd_registro.setModal(true);
         jd_registro.setLocationRelativeTo(this);
@@ -205,6 +211,9 @@ public class LogIn extends javax.swing.JFrame {
     private void jb_registrar_registroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_registrar_registroMouseClicked
         /*
         verificación de datos
+        --Lo siguiente es para la contraseña digerida
+        String password = SHA(tf_login_password.getText());
+        JOptionPane.showMessageDialog(this, password);
         */
         tf_nombres_registrar.setText("");
         tf_apellidos_registrar.setText("");
@@ -213,6 +222,14 @@ public class LogIn extends javax.swing.JFrame {
         this.setVisible(true);
         jd_registro.dispose();
     }//GEN-LAST:event_jb_registrar_registroMouseClicked
+
+    private void jb_login_iniciarSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_login_iniciarSMouseClicked
+       
+            //prueba del metodo SHA
+           
+        
+        
+    }//GEN-LAST:event_jb_login_iniciarSMouseClicked
 
     /**
      * @param args the command line arguments
@@ -247,6 +264,24 @@ public class LogIn extends javax.swing.JFrame {
                 new LogIn().setVisible(true);
             }
         });
+    }
+    
+    public String SHA(String password) throws NoSuchAlgorithmException{
+        //cadena introducida por el usuario
+        byte[] input = password.getBytes();
+        //objeto de mensage digerido usando SHA1
+        MessageDigest SHA1 = MessageDigest.getInstance("SHA");
+        SHA1.update(input);
+        byte[] digest = SHA1.digest();
+        //conversion a formato hex
+        StringBuffer hexaDigest = new StringBuffer();
+        for (int i = 0; i < digest.length; i++) {
+            hexaDigest.append(Integer.toString((digest[i]&0xff)+0x100,16).substring(1));
+        }
+        
+        String pass = hexaDigest.toString();
+        return pass;
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
