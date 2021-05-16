@@ -44,12 +44,30 @@ public class LogIn extends javax.swing.JFrame {
         tf_apellidos_registrar = new javax.swing.JTextField();
         tf_username_registrar = new javax.swing.JTextField();
         tf_contrasena_registrar = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        tf_Confirmar_contrasena_registrar = new javax.swing.JTextField();
+        jd_admin = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jt_clases_admin = new javax.swing.JTable();
+        jb_agregarClase_admin = new javax.swing.JButton();
+        jd_alumno = new javax.swing.JDialog();
+        jd_AgregarClase = new javax.swing.JDialog();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        tf_idClase_admin = new javax.swing.JTextField();
+        tf_nombreClase_admin = new javax.swing.JTextField();
+        jb_ConfirmarAgregarClase_admin = new javax.swing.JButton();
+        jb_regresarAadmin = new javax.swing.JButton();
+        jpm_opcionesClase_admin = new javax.swing.JPopupMenu();
+        jm_mostrarExamen = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_login_username = new javax.swing.JTextField();
         tf_login_password = new javax.swing.JTextField();
         jb_login_iniciarS = new javax.swing.JButton();
         jb_login_registrarse = new javax.swing.JButton();
+
+        jd_registro.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jb_regresar_registro.setText("Regresar");
         jb_regresar_registro.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -73,29 +91,32 @@ public class LogIn extends javax.swing.JFrame {
 
         jLabel6.setText("Contraseña:");
 
+        jLabel9.setText("Confirmar Contraseña");
+
         javax.swing.GroupLayout jd_registroLayout = new javax.swing.GroupLayout(jd_registro.getContentPane());
         jd_registro.getContentPane().setLayout(jd_registroLayout);
         jd_registroLayout.setHorizontalGroup(
             jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_registroLayout.createSequentialGroup()
-                .addGap(111, 111, 111)
+                .addGap(65, 65, 65)
                 .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addGap(18, 18, 18)
+                .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jd_registroLayout.createSequentialGroup()
                         .addComponent(jb_registrar_registro)
-                        .addGap(58, 58, 58)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                         .addComponent(jb_regresar_registro))
-                    .addGroup(jd_registroLayout.createSequentialGroup()
-                        .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tf_nombres_registrar)
-                            .addComponent(tf_apellidos_registrar)
-                            .addComponent(tf_username_registrar, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                            .addComponent(tf_contrasena_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(tf_nombres_registrar, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_apellidos_registrar, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(tf_Confirmar_contrasena_registrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                        .addComponent(tf_contrasena_registrar, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tf_username_registrar, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addContainerGap(177, Short.MAX_VALUE))
         );
         jd_registroLayout.setVerticalGroup(
@@ -117,12 +138,147 @@ public class LogIn extends javax.swing.JFrame {
                 .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(tf_contrasena_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(tf_Confirmar_contrasena_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_registrar_registro)
                     .addComponent(jb_regresar_registro))
-                .addGap(56, 56, 56))
+                .addGap(37, 37, 37))
         );
+
+        jd_admin.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jt_clases_admin.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nombre de la Clase"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jt_clases_admin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jt_clases_adminMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jt_clases_admin);
+
+        jb_agregarClase_admin.setText("Agregar una Clase");
+        jb_agregarClase_admin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_agregarClase_adminMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jd_adminLayout = new javax.swing.GroupLayout(jd_admin.getContentPane());
+        jd_admin.getContentPane().setLayout(jd_adminLayout);
+        jd_adminLayout.setHorizontalGroup(
+            jd_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_adminLayout.createSequentialGroup()
+                .addGroup(jd_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_adminLayout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jd_adminLayout.createSequentialGroup()
+                        .addGap(253, 253, 253)
+                        .addComponent(jb_agregarClase_admin)))
+                .addContainerGap(71, Short.MAX_VALUE))
+        );
+        jd_adminLayout.setVerticalGroup(
+            jd_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_adminLayout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(jb_agregarClase_admin)
+                .addGap(23, 23, 23))
+        );
+
+        jd_alumno.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        javax.swing.GroupLayout jd_alumnoLayout = new javax.swing.GroupLayout(jd_alumno.getContentPane());
+        jd_alumno.getContentPane().setLayout(jd_alumnoLayout);
+        jd_alumnoLayout.setHorizontalGroup(
+            jd_alumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 527, Short.MAX_VALUE)
+        );
+        jd_alumnoLayout.setVerticalGroup(
+            jd_alumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 353, Short.MAX_VALUE)
+        );
+
+        jLabel7.setText("ID:");
+
+        jLabel8.setText("Nombre de la Clase:");
+
+        jb_ConfirmarAgregarClase_admin.setText("Agregar");
+
+        jb_regresarAadmin.setText("Regresar");
+        jb_regresarAadmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_regresarAadminMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jd_AgregarClaseLayout = new javax.swing.GroupLayout(jd_AgregarClase.getContentPane());
+        jd_AgregarClase.getContentPane().setLayout(jd_AgregarClaseLayout);
+        jd_AgregarClaseLayout.setHorizontalGroup(
+            jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_AgregarClaseLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addGap(30, 30, 30)
+                .addGroup(jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tf_idClase_admin)
+                    .addComponent(tf_nombreClase_admin, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_AgregarClaseLayout.createSequentialGroup()
+                .addContainerGap(243, Short.MAX_VALUE)
+                .addComponent(jb_ConfirmarAgregarClase_admin)
+                .addGap(18, 18, 18)
+                .addComponent(jb_regresarAadmin)
+                .addGap(16, 16, 16))
+        );
+        jd_AgregarClaseLayout.setVerticalGroup(
+            jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_AgregarClaseLayout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addGroup(jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(tf_idClase_admin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(tf_nombreClase_admin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_ConfirmarAgregarClase_admin)
+                    .addComponent(jb_regresarAadmin))
+                .addContainerGap())
+        );
+
+        jm_mostrarExamen.setText("Mostrar Examen");
+        jpm_opcionesClase_admin.add(jm_mostrarExamen);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -203,6 +359,7 @@ public class LogIn extends javax.swing.JFrame {
         tf_apellidos_registrar.setText("");
         tf_username_registrar.setText("");
         tf_contrasena_registrar.setText("");
+        tf_Confirmar_contrasena_registrar.setText("");
         this.setVisible(true);
         jd_registro.dispose();
         
@@ -224,12 +381,40 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_registrar_registroMouseClicked
 
     private void jb_login_iniciarSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_login_iniciarSMouseClicked
-       
-            //prueba del metodo SHA
+    //prueba del metodo SHA
+    this.setVisible(false);
+    jd_admin.pack();
+    jd_admin.setModal(true);
+    jd_admin.setLocationRelativeTo(this);
+    jd_admin.setVisible(true);
            
         
         
     }//GEN-LAST:event_jb_login_iniciarSMouseClicked
+
+    private void jb_regresarAadminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresarAadminMouseClicked
+        tf_idClase_admin.setText("");
+        tf_nombreClase_admin.setText("");
+        jd_AgregarClase.dispose();
+        jd_admin.setVisible(true);
+        
+    }//GEN-LAST:event_jb_regresarAadminMouseClicked
+
+    private void jb_agregarClase_adminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_agregarClase_adminMouseClicked
+        jd_admin.setVisible(false);
+        jd_AgregarClase.pack();
+        jd_AgregarClase.setModal(true);
+        jd_AgregarClase.setLocationRelativeTo(jd_admin);
+        jd_AgregarClase.setVisible(true);
+    }//GEN-LAST:event_jb_agregarClase_adminMouseClicked
+
+    private void jt_clases_adminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_clases_adminMouseClicked
+        if (evt.isMetaDown()) {
+            if (jt_clases_admin.getSelectedRow()>=0) {
+                jpm_opcionesClase_admin.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_jt_clases_adminMouseClicked
 
     /**
      * @param args the command line arguments
@@ -291,15 +476,31 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jb_ConfirmarAgregarClase_admin;
+    private javax.swing.JButton jb_agregarClase_admin;
     private javax.swing.JButton jb_login_iniciarS;
     private javax.swing.JButton jb_login_registrarse;
     private javax.swing.JButton jb_registrar_registro;
+    private javax.swing.JButton jb_regresarAadmin;
     private javax.swing.JButton jb_regresar_registro;
+    private javax.swing.JDialog jd_AgregarClase;
+    private javax.swing.JDialog jd_admin;
+    private javax.swing.JDialog jd_alumno;
     private javax.swing.JDialog jd_registro;
+    private javax.swing.JMenuItem jm_mostrarExamen;
+    private javax.swing.JPopupMenu jpm_opcionesClase_admin;
+    private javax.swing.JTable jt_clases_admin;
+    private javax.swing.JTextField tf_Confirmar_contrasena_registrar;
     private javax.swing.JTextField tf_apellidos_registrar;
     private javax.swing.JTextField tf_contrasena_registrar;
+    private javax.swing.JTextField tf_idClase_admin;
     private javax.swing.JTextField tf_login_password;
     private javax.swing.JTextField tf_login_username;
+    private javax.swing.JTextField tf_nombreClase_admin;
     private javax.swing.JTextField tf_nombres_registrar;
     private javax.swing.JTextField tf_username_registrar;
     // End of variables declaration//GEN-END:variables
