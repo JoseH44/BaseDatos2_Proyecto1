@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.*;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -381,12 +382,17 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_registrar_registroMouseClicked
 
     private void jb_login_iniciarSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_login_iniciarSMouseClicked
-    //prueba del metodo SHA
+    /*llenado de tabla para el admin sin la base de datos
+    DefaultTableModel modelC1 = (DefaultTableModel)jt_clases_admin.getModel();
+    Object[] newRow = {1,"Español"};
+    modelC1.addRow(newRow);
+    jt_clases_admin.setModel(modelC1);*/
     this.setVisible(false);
     jd_admin.pack();
     jd_admin.setModal(true);
     jd_admin.setLocationRelativeTo(this);
     jd_admin.setVisible(true);
+    
            
         
         
