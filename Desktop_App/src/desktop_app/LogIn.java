@@ -60,7 +60,17 @@ public class LogIn extends javax.swing.JFrame {
         jb_ConfirmarAgregarClase_admin = new javax.swing.JButton();
         jb_regresarAadmin = new javax.swing.JButton();
         jpm_opcionesClase_admin = new javax.swing.JPopupMenu();
+        jm_agregarPregunta = new javax.swing.JMenuItem();
+        jm_CrearExamen = new javax.swing.JMenuItem();
         jm_mostrarExamen = new javax.swing.JMenuItem();
+        jd_crearPregunta_admin = new javax.swing.JDialog();
+        jb_crearPregunta = new javax.swing.JButton();
+        jb_regresarAadmin_p = new javax.swing.JButton();
+        jd_crearExamen_admin = new javax.swing.JDialog();
+        jb_regresarAadmin_CE = new javax.swing.JButton();
+        jb_crearExamen = new javax.swing.JButton();
+        jd_mostrarExamen = new javax.swing.JDialog();
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_login_username = new javax.swing.JTextField();
@@ -114,10 +124,9 @@ public class LogIn extends javax.swing.JFrame {
                         .addComponent(jb_regresar_registro))
                     .addComponent(tf_nombres_registrar, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tf_apellidos_registrar, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(tf_Confirmar_contrasena_registrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                        .addComponent(tf_contrasena_registrar, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(tf_username_registrar, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addComponent(tf_Confirmar_contrasena_registrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                    .addComponent(tf_contrasena_registrar, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_username_registrar, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap(177, Short.MAX_VALUE))
         );
         jd_registroLayout.setVerticalGroup(
@@ -278,8 +287,113 @@ public class LogIn extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jm_agregarPregunta.setText("Crear Pregunta");
+        jm_agregarPregunta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_agregarPreguntaActionPerformed(evt);
+            }
+        });
+        jpm_opcionesClase_admin.add(jm_agregarPregunta);
+
+        jm_CrearExamen.setText("Crear Examen");
+        jm_CrearExamen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_CrearExamenActionPerformed(evt);
+            }
+        });
+        jpm_opcionesClase_admin.add(jm_CrearExamen);
+
         jm_mostrarExamen.setText("Mostrar Examen");
+        jm_mostrarExamen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_mostrarExamenActionPerformed(evt);
+            }
+        });
         jpm_opcionesClase_admin.add(jm_mostrarExamen);
+
+        jb_crearPregunta.setText("Crear");
+
+        jb_regresarAadmin_p.setText("Regresar");
+        jb_regresarAadmin_p.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_regresarAadmin_pMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jd_crearPregunta_adminLayout = new javax.swing.GroupLayout(jd_crearPregunta_admin.getContentPane());
+        jd_crearPregunta_admin.getContentPane().setLayout(jd_crearPregunta_adminLayout);
+        jd_crearPregunta_adminLayout.setHorizontalGroup(
+            jd_crearPregunta_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_crearPregunta_adminLayout.createSequentialGroup()
+                .addContainerGap(246, Short.MAX_VALUE)
+                .addComponent(jb_crearPregunta)
+                .addGap(64, 64, 64)
+                .addComponent(jb_regresarAadmin_p)
+                .addGap(65, 65, 65))
+        );
+        jd_crearPregunta_adminLayout.setVerticalGroup(
+            jd_crearPregunta_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_crearPregunta_adminLayout.createSequentialGroup()
+                .addContainerGap(285, Short.MAX_VALUE)
+                .addGroup(jd_crearPregunta_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_crearPregunta)
+                    .addComponent(jb_regresarAadmin_p))
+                .addGap(21, 21, 21))
+        );
+
+        jb_regresarAadmin_CE.setText("Regresar");
+        jb_regresarAadmin_CE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_regresarAadmin_CEMouseClicked(evt);
+            }
+        });
+
+        jb_crearExamen.setText("Crear Examen");
+
+        javax.swing.GroupLayout jd_crearExamen_adminLayout = new javax.swing.GroupLayout(jd_crearExamen_admin.getContentPane());
+        jd_crearExamen_admin.getContentPane().setLayout(jd_crearExamen_adminLayout);
+        jd_crearExamen_adminLayout.setHorizontalGroup(
+            jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_crearExamen_adminLayout.createSequentialGroup()
+                .addContainerGap(327, Short.MAX_VALUE)
+                .addComponent(jb_crearExamen)
+                .addGap(33, 33, 33)
+                .addComponent(jb_regresarAadmin_CE)
+                .addGap(33, 33, 33))
+        );
+        jd_crearExamen_adminLayout.setVerticalGroup(
+            jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_crearExamen_adminLayout.createSequentialGroup()
+                .addContainerGap(290, Short.MAX_VALUE)
+                .addGroup(jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_regresarAadmin_CE)
+                    .addComponent(jb_crearExamen))
+                .addGap(27, 27, 27))
+        );
+
+        jButton1.setText("Regresar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jd_mostrarExamenLayout = new javax.swing.GroupLayout(jd_mostrarExamen.getContentPane());
+        jd_mostrarExamen.getContentPane().setLayout(jd_mostrarExamenLayout);
+        jd_mostrarExamenLayout.setHorizontalGroup(
+            jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarExamenLayout.createSequentialGroup()
+                .addContainerGap(421, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(24, 24, 24))
+        );
+        jd_mostrarExamenLayout.setVerticalGroup(
+            jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarExamenLayout.createSequentialGroup()
+                .addContainerGap(262, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(31, 31, 31))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -382,11 +496,11 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_registrar_registroMouseClicked
 
     private void jb_login_iniciarSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_login_iniciarSMouseClicked
-    /*llenado de tabla para el admin sin la base de datos
+//    llenado de tabla para el admin sin la base de datos
     DefaultTableModel modelC1 = (DefaultTableModel)jt_clases_admin.getModel();
     Object[] newRow = {1,"Español"};
     modelC1.addRow(newRow);
-    jt_clases_admin.setModel(modelC1);*/
+    jt_clases_admin.setModel(modelC1);
     this.setVisible(false);
     jd_admin.pack();
     jd_admin.setModal(true);
@@ -418,9 +532,53 @@ public class LogIn extends javax.swing.JFrame {
         if (evt.isMetaDown()) {
             if (jt_clases_admin.getSelectedRow()>=0) {
                 jpm_opcionesClase_admin.show(evt.getComponent(), evt.getX(), evt.getY());
-            }
+            } 
         }
     }//GEN-LAST:event_jt_clases_adminMouseClicked
+
+    private void jm_agregarPreguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_agregarPreguntaActionPerformed
+        //abrir ventana para agregarle una pregunta a la clase
+        jd_admin.setVisible(false);
+        jd_crearPregunta_admin.pack();
+        jd_crearPregunta_admin.setModal(true);
+        jd_crearPregunta_admin.setLocationRelativeTo(jd_admin);
+        jd_crearPregunta_admin.setVisible(true);
+    }//GEN-LAST:event_jm_agregarPreguntaActionPerformed
+
+    private void jm_CrearExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_CrearExamenActionPerformed
+        /*abrir ventana con las preguntas del examen en un jlist,
+        nombre de la clase, un jspinner o jtext mostrando cuantas lleva y cuál es el límite
+        */
+        jd_admin.setVisible(false);
+        jd_crearExamen_admin.pack();
+        jd_crearExamen_admin.setModal(true);
+        jd_crearExamen_admin.setLocationRelativeTo(jd_admin);
+        jd_crearExamen_admin.setVisible(true);
+    }//GEN-LAST:event_jm_CrearExamenActionPerformed
+
+    private void jm_mostrarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_mostrarExamenActionPerformed
+        //abrir ventana con un jlist enseñando las preguntas del exmamen.
+        jd_admin.setVisible(false);
+        jd_mostrarExamen.pack();
+        jd_mostrarExamen.setModal(true);
+        jd_mostrarExamen.setLocationRelativeTo(jd_admin);
+        jd_mostrarExamen.setVisible(true);
+    }//GEN-LAST:event_jm_mostrarExamenActionPerformed
+
+    private void jb_regresarAadmin_pMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresarAadmin_pMouseClicked
+        jd_crearPregunta_admin.dispose();
+        jd_admin.setVisible(true);
+    }//GEN-LAST:event_jb_regresarAadmin_pMouseClicked
+
+    private void jb_regresarAadmin_CEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresarAadmin_CEMouseClicked
+        jd_crearExamen_admin.dispose();
+        jd_admin.setVisible(true);
+    }//GEN-LAST:event_jb_regresarAadmin_CEMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        jd_mostrarExamen.dispose();
+        jd_admin.setVisible(true);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -476,6 +634,7 @@ public class LogIn extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -488,15 +647,24 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jb_ConfirmarAgregarClase_admin;
     private javax.swing.JButton jb_agregarClase_admin;
+    private javax.swing.JButton jb_crearExamen;
+    private javax.swing.JButton jb_crearPregunta;
     private javax.swing.JButton jb_login_iniciarS;
     private javax.swing.JButton jb_login_registrarse;
     private javax.swing.JButton jb_registrar_registro;
     private javax.swing.JButton jb_regresarAadmin;
+    private javax.swing.JButton jb_regresarAadmin_CE;
+    private javax.swing.JButton jb_regresarAadmin_p;
     private javax.swing.JButton jb_regresar_registro;
     private javax.swing.JDialog jd_AgregarClase;
     private javax.swing.JDialog jd_admin;
     private javax.swing.JDialog jd_alumno;
+    private javax.swing.JDialog jd_crearExamen_admin;
+    private javax.swing.JDialog jd_crearPregunta_admin;
+    private javax.swing.JDialog jd_mostrarExamen;
     private javax.swing.JDialog jd_registro;
+    private javax.swing.JMenuItem jm_CrearExamen;
+    private javax.swing.JMenuItem jm_agregarPregunta;
     private javax.swing.JMenuItem jm_mostrarExamen;
     private javax.swing.JPopupMenu jpm_opcionesClase_admin;
     private javax.swing.JTable jt_clases_admin;
