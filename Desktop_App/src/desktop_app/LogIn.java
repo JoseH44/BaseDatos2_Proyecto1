@@ -487,6 +487,13 @@ public class LogIn extends javax.swing.JFrame {
         String password = SHA(tf_login_password.getText());
         JOptionPane.showMessageDialog(this, password);
         */
+        String nombreA = tf_nombres_registrar.getText() + " " + tf_apellidos_registrar.getText();
+        String userA = tf_username_registrar.getText();
+        try {
+            String password = SHA(tf_contrasena_registrar.getText());
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tf_nombres_registrar.setText("");
         tf_apellidos_registrar.setText("");
         tf_username_registrar.setText("");

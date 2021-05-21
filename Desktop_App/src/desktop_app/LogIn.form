@@ -28,7 +28,7 @@
                       </Group>
                       <Component id="tf_nombres_registrar" alignment="0" max="32767" attributes="0"/>
                       <Component id="tf_apellidos_registrar" alignment="0" max="32767" attributes="0"/>
-                      <Component id="tf_Confirmar_contrasena_registrar" alignment="0" pref="168" max="32767" attributes="0"/>
+                      <Component id="tf_Confirmar_contrasena_registrar" alignment="0" pref="210" max="32767" attributes="0"/>
                       <Component id="tf_contrasena_registrar" alignment="0" max="32767" attributes="0"/>
                       <Component id="tf_username_registrar" alignment="0" max="32767" attributes="0"/>
                   </Group>
