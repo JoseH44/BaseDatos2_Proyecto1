@@ -6,6 +6,7 @@
 package desktop_app;
 
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Cluster;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.ResultSet;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Row;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Session;
 import java.util.ArrayList;
@@ -58,6 +59,32 @@ public class CQL_OPERACIONES {
         session.execute(
                 "INSERT INTO ALUMNO (ida, contrasena, login, nombre_completo) VALUES " +
                         "(" + insert + ")");
+    }
+    
+    //verificar login
+    public static boolean foundUser(String user){
+        boolean flag = false;
+        String loginDB = "";
+        ResultSet results = session.execute("SELECT login FROM alumno");
+        for (Row row : results) {
+            loginDB = row.getString("login");
+            System.out.println(loginDB);
+            if(loginDB.equals(user))
+                flag = true;
+        }
+        
+        return flag;
+    }
+    
+    //metodo que retorna el último id
+    public static int lastID_Alumno(){
+        int last = 0;
+        ResultSet results = session.execute("SELECT ida FROM alumno");
+        for (Row row : results) {
+            last++;
+        }
+        return last;
+        
     }
     
 }

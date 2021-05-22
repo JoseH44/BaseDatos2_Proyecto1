@@ -5,6 +5,7 @@
  */
 package desktop_app;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Cluster;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.ResultSet;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Session;
 import java.security.*;
 import java.util.logging.Level;
@@ -28,6 +29,7 @@ public class LogIn extends javax.swing.JFrame {
         
 //        CQL_OPERACIONES.IniciarConnection();
 //        CQL_OPERACIONES.IniciarSession("proyecto");
+//        CQL_OPERACIONES.insertAlumnos(1, "12345", "maria34", "Maria");
 //        CQL_OPERACIONES.endConnection();
         
         //connect cluster and session
@@ -56,9 +58,9 @@ public class LogIn extends javax.swing.JFrame {
         tf_nombres_registrar = new javax.swing.JTextField();
         tf_apellidos_registrar = new javax.swing.JTextField();
         tf_username_registrar = new javax.swing.JTextField();
-        tf_contrasena_registrar = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        tf_Confirmar_contrasena_registrar = new javax.swing.JTextField();
+        jp_contrasena_registro = new javax.swing.JPasswordField();
+        jp_contrasenaConfirm_registro = new javax.swing.JPasswordField();
         jd_admin = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_clases_admin = new javax.swing.JTable();
@@ -129,16 +131,17 @@ public class LogIn extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jd_registroLayout.createSequentialGroup()
-                        .addComponent(jb_registrar_registro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                        .addComponent(jb_regresar_registro))
-                    .addComponent(tf_nombres_registrar, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tf_apellidos_registrar, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tf_Confirmar_contrasena_registrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                    .addComponent(tf_contrasena_registrar, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tf_username_registrar, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jd_registroLayout.createSequentialGroup()
+                            .addComponent(jb_registrar_registro)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                            .addComponent(jb_regresar_registro))
+                        .addComponent(tf_nombres_registrar, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tf_apellidos_registrar, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tf_username_registrar, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jp_contrasena_registro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jp_contrasenaConfirm_registro, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(177, Short.MAX_VALUE))
         );
         jd_registroLayout.setVerticalGroup(
@@ -159,11 +162,11 @@ public class LogIn extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(tf_contrasena_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jp_contrasena_registro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(tf_Confirmar_contrasena_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jp_contrasenaConfirm_registro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jd_registroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_registrar_registro)
@@ -485,42 +488,45 @@ public class LogIn extends javax.swing.JFrame {
         tf_nombres_registrar.setText("");
         tf_apellidos_registrar.setText("");
         tf_username_registrar.setText("");
-        tf_contrasena_registrar.setText("");
-        tf_Confirmar_contrasena_registrar.setText("");
+        jp_contrasena_registro.setText("");
+        jp_contrasenaConfirm_registro.setText("");
         this.setVisible(true);
         jd_registro.dispose();
         
     }//GEN-LAST:event_jb_regresar_registroMouseClicked
 
     private void jb_registrar_registroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_registrar_registroMouseClicked
-        
-        
-            /*
-            verificación de datos
-            --Lo siguiente es para la contraseña digerida
-            String password = SHA(tf_login_password.getText());
-            JOptionPane.showMessageDialog(this, password);
-            */
-            //String pass1 = SHA("admin1234");
-            
-            
-            //CQL_OPERACIONES.insertAlumnos(0, pass1, "Admin", "Administrador");
-            
-        
-        
-        String nombreA = tf_nombres_registrar.getText() + " " + tf_apellidos_registrar.getText();
-        String userA = tf_username_registrar.getText();
+        CQL_OPERACIONES.IniciarConnection();
+        CQL_OPERACIONES.IniciarSession("proyecto");
         try {
-            String password = SHA(tf_contrasena_registrar.getText());
+            String password = SHA(jp_contrasena_registro.getText());
+            String passConfirm = SHA(jp_contrasenaConfirm_registro.getText());
+            String nombreA = tf_nombres_registrar.getText() + " " + tf_apellidos_registrar.getText();
+            String userA = tf_username_registrar.getText();
+            int idA = CQL_OPERACIONES.lastID_Alumno();
+            if (password.equals(passConfirm)) {
+                if (CQL_OPERACIONES.foundUser(userA)) {
+                    JOptionPane.showMessageDialog(jd_registro, "El Usuario que Eligió Ya Existe");
+                }else{
+                    CQL_OPERACIONES.insertAlumnos(idA, password, userA, nombreA);
+                    CQL_OPERACIONES.endConnection();
+                    JOptionPane.showMessageDialog(jd_registro, "¡Registrado Exitosamente!");
+                    tf_nombres_registrar.setText("");
+                    tf_apellidos_registrar.setText("");
+                    tf_username_registrar.setText("");
+                    jp_contrasena_registro.setText("");
+                    jp_contrasenaConfirm_registro.setText("");
+                    this.setVisible(true);
+                    jd_registro.dispose();
+                }
+            }else{
+                JOptionPane.showMessageDialog(jd_registro, "Las Contraseñas no Coinciden");
+            }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tf_nombres_registrar.setText("");
-        tf_apellidos_registrar.setText("");
-        tf_username_registrar.setText("");
-        tf_contrasena_registrar.setText("");
-        this.setVisible(true);
-        jd_registro.dispose();
+        
+        
     }//GEN-LAST:event_jb_registrar_registroMouseClicked
 
     private void jb_login_iniciarSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_login_iniciarSMouseClicked
@@ -694,11 +700,11 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JMenuItem jm_CrearExamen;
     private javax.swing.JMenuItem jm_agregarPregunta;
     private javax.swing.JMenuItem jm_mostrarExamen;
+    private javax.swing.JPasswordField jp_contrasenaConfirm_registro;
+    private javax.swing.JPasswordField jp_contrasena_registro;
     private javax.swing.JPopupMenu jpm_opcionesClase_admin;
     private javax.swing.JTable jt_clases_admin;
-    private javax.swing.JTextField tf_Confirmar_contrasena_registrar;
     private javax.swing.JTextField tf_apellidos_registrar;
-    private javax.swing.JTextField tf_contrasena_registrar;
     private javax.swing.JTextField tf_idClase_admin;
     private javax.swing.JTextField tf_login_password;
     private javax.swing.JTextField tf_login_username;
