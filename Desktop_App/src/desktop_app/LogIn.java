@@ -88,9 +88,9 @@ public class LogIn extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_login_username = new javax.swing.JTextField();
-        tf_login_password = new javax.swing.JTextField();
         jb_login_iniciarS = new javax.swing.JButton();
         jb_login_registrarse = new javax.swing.JButton();
+        jp_contrasena_login = new javax.swing.JPasswordField();
 
         jd_registro.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -443,8 +443,8 @@ public class LogIn extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tf_login_username)
-                            .addComponent(tf_login_password, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
+                            .addComponent(tf_login_username, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(jp_contrasena_login)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(174, 174, 174)
                         .addComponent(jb_login_iniciarS)
@@ -462,7 +462,7 @@ public class LogIn extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(tf_login_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jp_contrasena_login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_login_iniciarS)
@@ -480,7 +480,7 @@ public class LogIn extends javax.swing.JFrame {
         jd_registro.setLocationRelativeTo(this);
         jd_registro.setVisible(true);
         tf_login_username.setText("");
-        tf_login_password.setText("");
+        jp_contrasena_login.setText("");
         
     }//GEN-LAST:event_jb_login_registrarseMouseClicked
 
@@ -530,16 +530,37 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_registrar_registroMouseClicked
 
     private void jb_login_iniciarSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_login_iniciarSMouseClicked
-//    llenado de tabla para el admin sin la base de datos
-    DefaultTableModel modelC1 = (DefaultTableModel)jt_clases_admin.getModel();
-    Object[] newRow = {1,"Español"};
-    modelC1.addRow(newRow);
-    jt_clases_admin.setModel(modelC1);
-    this.setVisible(false);
-    jd_admin.pack();
-    jd_admin.setModal(true);
-    jd_admin.setLocationRelativeTo(this);
-    jd_admin.setVisible(true);
+        try {
+            //    llenado de tabla para el admin sin la base de datos
+            /*DefaultTableModel modelC1 = (DefaultTableModel)jt_clases_admin.getModel();
+            Object[] newRow = {1,"Español"};
+            modelC1.addRow(newRow);
+            jt_clases_admin.setModel(modelC1);*/
+            CQL_OPERACIONES.IniciarConnection();
+            CQL_OPERACIONES.IniciarSession("proyecto");
+            String userLog = tf_login_username.getText();
+            String passLog = SHA(jp_contrasena_login.getText());
+            if (CQL_OPERACIONES.matchInfo(userLog, passLog)) {
+                if (userLog.equals("Admin")) {
+                    CQL_OPERACIONES.endConnection();
+                    this.setVisible(false);
+                    jd_admin.pack();
+                    jd_admin.setModal(true);
+                    jd_admin.setLocationRelativeTo(this);
+                    jd_admin.setVisible(true);
+                }else{
+                    CQL_OPERACIONES.endConnection();
+                    this.setVisible(false);
+                    jd_alumno.pack();
+                    jd_alumno.setModal(true);
+                    jd_alumno.setLocationRelativeTo(this);
+                    jd_alumno.setVisible(true);
+                }
+            }
+            
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
            
         
@@ -701,12 +722,12 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JMenuItem jm_agregarPregunta;
     private javax.swing.JMenuItem jm_mostrarExamen;
     private javax.swing.JPasswordField jp_contrasenaConfirm_registro;
+    private javax.swing.JPasswordField jp_contrasena_login;
     private javax.swing.JPasswordField jp_contrasena_registro;
     private javax.swing.JPopupMenu jpm_opcionesClase_admin;
     private javax.swing.JTable jt_clases_admin;
     private javax.swing.JTextField tf_apellidos_registrar;
     private javax.swing.JTextField tf_idClase_admin;
-    private javax.swing.JTextField tf_login_password;
     private javax.swing.JTextField tf_login_username;
     private javax.swing.JTextField tf_nombreClase_admin;
     private javax.swing.JTextField tf_nombres_registrar;

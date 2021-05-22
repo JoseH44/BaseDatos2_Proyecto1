@@ -87,4 +87,21 @@ public class CQL_OPERACIONES {
         
     }
     
+    //inicio de sesión
+    public static boolean matchInfo(String login, String password){
+        boolean flag = false;
+        String loginDB = "";
+        String passDB = "";
+        ResultSet results = session.execute("SELECT * FROM alumno");
+        for (Row row : results) {
+            loginDB = row.getString("login");
+            passDB = row.getString("contrasena");
+            
+            if(loginDB.equals(login) && passDB.equals(password));
+                flag = true;
+        }
+        
+        return flag;
+    }
+    
 }
