@@ -540,8 +540,11 @@ public class LogIn extends javax.swing.JFrame {
             CQL_OPERACIONES.IniciarSession("proyecto");
             String userLog = tf_login_username.getText();
             String passLog = SHA(jp_contrasena_login.getText());
-            if (CQL_OPERACIONES.matchInfo(userLog, passLog)) {
+            boolean resultado = CQL_OPERACIONES.matchInfo(userLog, passLog);
+            System.out.println(resultado);
+            if (resultado) {
                 if (userLog.equals("Admin")) {
+                    System.out.println("PASSWORD MAIN:" + passLog);
                     CQL_OPERACIONES.endConnection();
                     this.setVisible(false);
                     jd_admin.pack();
@@ -556,6 +559,8 @@ public class LogIn extends javax.swing.JFrame {
                     jd_alumno.setLocationRelativeTo(this);
                     jd_alumno.setVisible(true);
                 }
+            }else{
+                JOptionPane.showMessageDialog(this, "No Se Encontraron Sus Datos");
             }
             
         } catch (NoSuchAlgorithmException ex) {

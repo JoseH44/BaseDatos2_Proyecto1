@@ -96,9 +96,11 @@ public class CQL_OPERACIONES {
         for (Row row : results) {
             loginDB = row.getString("login");
             passDB = row.getString("contrasena");
-            
-            if(loginDB.equals(login) && passDB.equals(password));
-                flag = true;
+            if (login.equals(loginDB) && password.equals(passDB)) {
+                System.out.println("LOGIN:" + loginDB + " PASSWORD:" + passDB);
+                System.out.println("LOGIN MAIN:" + login + " PASSWORD MAIN:" + password);
+                flag = true; 
+            }
         }
         
         return flag;
