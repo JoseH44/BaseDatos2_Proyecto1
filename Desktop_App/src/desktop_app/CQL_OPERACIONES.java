@@ -66,6 +66,15 @@ public class CQL_OPERACIONES {
                         "(" + insert + ")");
     }
     
+    //insertar en la tabla preguntas
+    public static void insertarPregunta(int idP, String descripcion, int idClase, boolean respuesta, String titulo){
+        String insert = "";
+        insert += idP + ",'" + descripcion + "'," + idClase + "," + respuesta + ",'" + titulo + "'";
+        System.out.println(insert);
+        session.execute("INSERT INTO PREGUNTAS (idp, descripcion, idclase, respuesta, titulo) VALUES (" +
+                insert + ")");
+    }
+    
     //verificar login
     public static boolean foundUser(String user){
         boolean flag = false;
@@ -92,13 +101,15 @@ public class CQL_OPERACIONES {
         
     }
     
+    
     //metodo que retorna el último id de clase
-    public static int lastID_Clase(){
+    public static int lastID_Pregunta(){
         int last = 0;
-        ResultSet results = session.execute("SELECT idclase FROM clase");
+        ResultSet results = session.execute("SELECT idp FROM preguntas");
         for (Row row : results) {
             last++;
         }
+        System.out.println("NUM PREGUNTA:"+ last);
         return last;
     }
     
