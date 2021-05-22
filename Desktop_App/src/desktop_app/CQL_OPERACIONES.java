@@ -75,6 +75,14 @@ public class CQL_OPERACIONES {
                 insert + ")");
     }
     
+    public static void insertarExamen(int idExamen, int idClase, int Cantpreguntas){
+        String query = "";
+        query += idExamen + "," + idClase + "," + Cantpreguntas;
+        System.out.println(query);
+        session.execute("INSERT INTO EXAMEN (ide, idclase, num_preguntas) VALUES (" +
+                query + ")");
+    }
+    
     //verificar login
     public static boolean foundUser(String user){
         boolean flag = false;
@@ -101,6 +109,43 @@ public class CQL_OPERACIONES {
         
     }
     
+    //metodo que retorna el último id de examenes
+    public static int lastID_Examen(){
+        int last = 0;
+        ResultSet results = session.execute("SELECT ide FROM examen");
+        for (Row row : results) {
+            last++;
+        }
+        return last;
+        
+    }
+    
+    //metodo que retorna la cantidad de preguntas relacionada a una clase
+    public static int lastID_CantPreguntasClase(int idClase){
+        int counter = 0;
+        ResultSet results = session.execute("SELECT idp FROM preguntas WHERE idclase = " + idClase + " ALLOW FILTERING");
+        for (Row row : results) {
+            counter++;
+        }
+        System.out.println("CANTIDAD DE PREGUNTAS EN EL METODO: " + counter);
+        return counter;
+        
+        
+    }
+    
+    //metodo para validar que una clase ya tenga examen
+    public static boolean ExistsExamen(int idClase){
+        boolean flag = false;
+        int counter = 0;
+        ResultSet results = session.execute("SELECT * FROM examen WHERE idclase = " + idClase + " ALLOW FILTERING");
+        for (Row row : results) {
+           counter++;
+        }
+        if (counter > 0)
+            flag = true;
+        System.out.println("EXISTE EXAMEN PARA ESTA CLASE: " + flag);
+        return flag;
+    }
     
     //metodo que retorna el último id de clase
     public static int lastID_Pregunta(){
