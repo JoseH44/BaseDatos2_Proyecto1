@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package desktop_app;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.Cluster;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.Session;
 import java.security.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +25,16 @@ public class LogIn extends javax.swing.JFrame {
     public LogIn() {
         initComponents();
         setLocationRelativeTo(null);
+        
+//        CQL_OPERACIONES.IniciarConnection();
+//        CQL_OPERACIONES.IniciarSession("proyecto");
+//        CQL_OPERACIONES.endConnection();
+        
+        //connect cluster and session
+        
+        
+        //inserting practice
+        //session.execute("INSERT INTO clase (idClase, nombreClase) VALUES (1, 'Ingles')");
     }
 
     /**
@@ -481,12 +493,21 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_regresar_registroMouseClicked
 
     private void jb_registrar_registroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_registrar_registroMouseClicked
-        /*
-        verificación de datos
-        --Lo siguiente es para la contraseña digerida
-        String password = SHA(tf_login_password.getText());
-        JOptionPane.showMessageDialog(this, password);
-        */
+        
+        
+            /*
+            verificación de datos
+            --Lo siguiente es para la contraseña digerida
+            String password = SHA(tf_login_password.getText());
+            JOptionPane.showMessageDialog(this, password);
+            */
+            //String pass1 = SHA("admin1234");
+            
+            
+            //CQL_OPERACIONES.insertAlumnos(0, pass1, "Admin", "Administrador");
+            
+        
+        
         String nombreA = tf_nombres_registrar.getText() + " " + tf_apellidos_registrar.getText();
         String userA = tf_username_registrar.getText();
         try {
@@ -685,4 +706,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JTextField tf_nombres_registrar;
     private javax.swing.JTextField tf_username_registrar;
     // End of variables declaration//GEN-END:variables
+Cluster cluster;
+Session session;
+
 }
