@@ -158,5 +158,27 @@ public class CQL_OPERACIONES {
         return last;
     }
     
+    //metodo que retorna la cantidad de preguntas en un examen
+    public static int cantPreguntasExamen(int idExamen){
+        int resultado = 0;
+        ResultSet results = session.execute("SELECT * FROM examen WHERE ide = " 
+                + idExamen + " ALLOW FILTERING");
+        for (Row row : results) {
+            resultado = row.getInt("num_preguntas");
+        }
+        return resultado;
+    }
+    
+    //metodo que retorna el id de un examen
+    public static int idExamen(int idClase){
+        int result = 0;
+        ResultSet results = session.execute("SELECT * FROM examen WHERE idclase = " 
+                + idClase + " ALLOW FILTERING");
+        for (Row row : results) {
+            result = row.getInt("ide");
+        }
+        return result;
+    }
+    
     
 }

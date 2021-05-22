@@ -98,6 +98,11 @@ public class LogIn extends javax.swing.JFrame {
         jl_nombreClae_Examen_admin = new javax.swing.JLabel();
         jd_mostrarExamen = new javax.swing.JDialog();
         jButton1 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        ta_infoExamen_admin = new javax.swing.JTextArea();
         bg_respuesta_admin = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -189,6 +194,7 @@ public class LogIn extends javax.swing.JFrame {
         );
 
         jd_admin.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jd_admin.setTitle("MENÚ PRINCIPAL ADMINISTRADOR");
 
         jt_clases_admin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -492,31 +498,62 @@ public class LogIn extends javax.swing.JFrame {
                 .addGap(74, 74, 74))
         );
 
-        jButton1.setText("Regresar");
+        jButton1.setText("Aceptar");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
             }
         });
 
+        jLabel14.setText("ID del Examen:");
+
+        jLabel15.setText("ID de la Clase:");
+
+        jLabel16.setText("Cantidad de Preguntas:");
+
+        ta_infoExamen_admin.setEditable(false);
+        ta_infoExamen_admin.setColumns(20);
+        ta_infoExamen_admin.setRows(5);
+        jScrollPane3.setViewportView(ta_infoExamen_admin);
+
         javax.swing.GroupLayout jd_mostrarExamenLayout = new javax.swing.GroupLayout(jd_mostrarExamen.getContentPane());
         jd_mostrarExamen.getContentPane().setLayout(jd_mostrarExamenLayout);
         jd_mostrarExamenLayout.setHorizontalGroup(
             jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarExamenLayout.createSequentialGroup()
-                .addContainerGap(421, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(24, 24, 24))
+            .addGroup(jd_mostrarExamenLayout.createSequentialGroup()
+                .addGroup(jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_mostrarExamenLayout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addGroup(jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel16))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jd_mostrarExamenLayout.createSequentialGroup()
+                        .addGap(210, 210, 210)
+                        .addComponent(jButton1)))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         jd_mostrarExamenLayout.setVerticalGroup(
             jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarExamenLayout.createSequentialGroup()
-                .addContainerGap(262, Short.MAX_VALUE)
+                .addGap(52, 52, 52)
+                .addGroup(jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jd_mostrarExamenLayout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel16))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(31, 31, 31))
+                .addGap(23, 23, 23))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("LOG-IN");
 
         jLabel1.setText("Usuario:");
 
@@ -756,11 +793,32 @@ public class LogIn extends javax.swing.JFrame {
 
     private void jm_mostrarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_mostrarExamenActionPerformed
         //abrir ventana con un jlist enseñando las preguntas del exmamen.
-        jd_admin.setVisible(false);
-        jd_mostrarExamen.pack();
-        jd_mostrarExamen.setModal(true);
-        jd_mostrarExamen.setLocationRelativeTo(jd_admin);
-        jd_mostrarExamen.setVisible(true);
+        //validación para ver si tiene examen
+        DefaultTableModel model = (DefaultTableModel)jt_clases_admin.getModel();
+        id_clase = (int) model.getValueAt(jt_clases_admin.getSelectedRow(), 0);
+        clase = (String) model.getValueAt(jt_clases_admin.getSelectedRow(), 1);
+        
+        CQL_OPERACIONES.IniciarConnection();
+        CQL_OPERACIONES.IniciarSession("proyecto");
+        
+        boolean result = CQL_OPERACIONES.ExistsExamen(id_clase);
+        int idE = CQL_OPERACIONES.idExamen(id_clase);
+        int cant_preguntas = CQL_OPERACIONES.cantPreguntasExamen(idE);
+        System.out.println("NUMERO DE PREGUNTAS EN EL EXAMEN: " + cant_preguntas);
+        if (result) {
+            CQL_OPERACIONES.endConnection();
+            ta_infoExamen_admin.setText(idE + "\n\n" + id_clase +
+                    "\n\n" + cant_preguntas);
+            jd_admin.setVisible(false);
+            jd_mostrarExamen.pack();
+            jd_mostrarExamen.setModal(true);
+            jd_mostrarExamen.setLocationRelativeTo(jd_admin);
+            jd_mostrarExamen.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(jd_admin, "Esta Clase No Tiene Examen");
+            CQL_OPERACIONES.endConnection();
+        }
+        
     }//GEN-LAST:event_jm_mostrarExamenActionPerformed
 
     private void jb_regresarAadmin_pMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresarAadmin_pMouseClicked
@@ -951,6 +1009,9 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -961,6 +1022,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_ConfirmarAgregarClase_admin;
     private javax.swing.JButton jb_agregarClase_admin;
     private javax.swing.JButton jb_crearExamen;
@@ -993,6 +1055,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JRadioButton rb_falso_admin;
     private javax.swing.JRadioButton rb_verdadero_admin;
     private javax.swing.JTextArea ta_descripcion_admin;
+    private javax.swing.JTextArea ta_infoExamen_admin;
     private javax.swing.JTextField tf_apellidos_registrar;
     private javax.swing.JTextField tf_login_username;
     private javax.swing.JTextField tf_nombreClase_admin;
