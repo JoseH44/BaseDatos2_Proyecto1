@@ -6,8 +6,10 @@
 package desktop_app;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Cluster;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.ResultSet;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.Row;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Session;
 import java.security.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.*;
@@ -67,9 +69,7 @@ public class LogIn extends javax.swing.JFrame {
         jb_agregarClase_admin = new javax.swing.JButton();
         jd_alumno = new javax.swing.JDialog();
         jd_AgregarClase = new javax.swing.JDialog();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        tf_idClase_admin = new javax.swing.JTextField();
         tf_nombreClase_admin = new javax.swing.JTextField();
         jb_ConfirmarAgregarClase_admin = new javax.swing.JButton();
         jb_regresarAadmin = new javax.swing.JButton();
@@ -250,11 +250,14 @@ public class LogIn extends javax.swing.JFrame {
             .addGap(0, 353, Short.MAX_VALUE)
         );
 
-        jLabel7.setText("ID:");
-
         jLabel8.setText("Nombre de la Clase:");
 
         jb_ConfirmarAgregarClase_admin.setText("Agregar");
+        jb_ConfirmarAgregarClase_admin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_ConfirmarAgregarClase_adminMouseClicked(evt);
+            }
+        });
 
         jb_regresarAadmin.setText("Regresar");
         jb_regresarAadmin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -268,38 +271,31 @@ public class LogIn extends javax.swing.JFrame {
         jd_AgregarClaseLayout.setHorizontalGroup(
             jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_AgregarClaseLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8))
-                .addGap(30, 30, 30)
-                .addGroup(jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tf_idClase_admin)
-                    .addComponent(tf_nombreClase_admin, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_AgregarClaseLayout.createSequentialGroup()
-                .addContainerGap(243, Short.MAX_VALUE)
-                .addComponent(jb_ConfirmarAgregarClase_admin)
-                .addGap(18, 18, 18)
-                .addComponent(jb_regresarAadmin)
-                .addGap(16, 16, 16))
+                .addGroup(jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_AgregarClaseLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_nombreClase_admin, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jd_AgregarClaseLayout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(jb_ConfirmarAgregarClase_admin)
+                        .addGap(72, 72, 72)
+                        .addComponent(jb_regresarAadmin)))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         jd_AgregarClaseLayout.setVerticalGroup(
             jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_AgregarClaseLayout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addGroup(jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(tf_idClase_admin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                .addGap(74, 74, 74)
                 .addGroup(jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(tf_nombreClase_admin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jd_AgregarClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_ConfirmarAgregarClase_admin)
                     .addComponent(jb_regresarAadmin))
-                .addContainerGap())
+                .addGap(49, 49, 49))
         );
 
         jm_agregarPregunta.setText("Crear Pregunta");
@@ -532,27 +528,39 @@ public class LogIn extends javax.swing.JFrame {
     private void jb_login_iniciarSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_login_iniciarSMouseClicked
         try {
             //    llenado de tabla para el admin sin la base de datos
-            /*DefaultTableModel modelC1 = (DefaultTableModel)jt_clases_admin.getModel();
-            Object[] newRow = {1,"Español"};
-            modelC1.addRow(newRow);
-            jt_clases_admin.setModel(modelC1);*/
-            CQL_OPERACIONES.IniciarConnection();
-            CQL_OPERACIONES.IniciarSession("proyecto");
+            
+            cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
+            session = cluster.connect("proyecto");
             String userLog = tf_login_username.getText();
             String passLog = SHA(jp_contrasena_login.getText());
-            boolean resultado = CQL_OPERACIONES.matchInfo(userLog, passLog);
+            boolean resultado = matchInfo(session, userLog, passLog);
             System.out.println(resultado);
             if (resultado) {
                 if (userLog.equals("Admin")) {
-                    System.out.println("PASSWORD MAIN:" + passLog);
-                    CQL_OPERACIONES.endConnection();
+                    DefaultTableModel modelC1 = (DefaultTableModel)jt_clases_admin.getModel();
+                    //llenado de la tabla
+                    int idClase;
+                    String nombreClase;
+                    ResultSet results = session.execute("SELECT * FROM clase");
+                    for (Row row : results) {
+                        idClase = row.getInt("idclase");
+                        nombreClase = row.getString("nombreclase");
+                        Object[] newRow = {idClase,nombreClase};
+                        modelC1.addRow(newRow);
+                    }
+                    jt_clases_admin.setModel(modelC1);
+                    //end connection
+                    session.close();
+                    cluster.close();
                     this.setVisible(false);
                     jd_admin.pack();
                     jd_admin.setModal(true);
                     jd_admin.setLocationRelativeTo(this);
                     jd_admin.setVisible(true);
                 }else{
-                    CQL_OPERACIONES.endConnection();
+                    //end connection
+                    session.close();
+                    cluster.close();
                     this.setVisible(false);
                     jd_alumno.pack();
                     jd_alumno.setModal(true);
@@ -573,7 +581,7 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_login_iniciarSMouseClicked
 
     private void jb_regresarAadminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresarAadminMouseClicked
-        tf_idClase_admin.setText("");
+        
         tf_nombreClase_admin.setText("");
         jd_AgregarClase.dispose();
         jd_admin.setVisible(true);
@@ -640,6 +648,31 @@ public class LogIn extends javax.swing.JFrame {
         jd_admin.setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void jb_ConfirmarAgregarClase_adminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_ConfirmarAgregarClase_adminMouseClicked
+        cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
+        session = cluster.connect("proyecto");
+        
+        if (tf_nombreClase_admin.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(jd_AgregarClase, "No ha Escrito el Nombre de la Clase");
+        }else{
+            DefaultTableModel modelT = (DefaultTableModel)jt_clases_admin.getModel();
+            int idClase = cantidad_datos(session);
+            String nombre_clase = tf_nombreClase_admin.getText();
+            insertClase(session, idClase, nombre_clase);
+            Object[] newRow = {idClase,nombre_clase};
+            modelT.addRow(newRow);
+            jt_clases_admin.setModel(modelT);
+            JOptionPane.showMessageDialog(jd_AgregarClase,"Clase Agregada Exitosamente");
+            tf_nombreClase_admin.setText("");
+            //end connection
+            session.close();
+            cluster.close();
+            jd_AgregarClase.dispose();
+            jd_admin.setVisible(true);
+            
+        }
+    }//GEN-LAST:event_jb_ConfirmarAgregarClase_adminMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -692,6 +725,41 @@ public class LogIn extends javax.swing.JFrame {
         return pass;
         
     }
+    
+    //inicio de sesión
+    public static boolean matchInfo(Session session, String login, String password){
+        boolean flag = false;
+        String loginDB = "";
+        String passDB = "";
+        ResultSet results = session.execute("SELECT * FROM alumno");
+        for (Row row : results) {
+            loginDB = row.getString("login");
+            passDB = row.getString("contrasena");
+            if (login.equals(loginDB) && password.equals(passDB)) {
+                System.out.println("LOGIN:" + loginDB + " PASSWORD:" + passDB);
+                System.out.println("LOGIN MAIN:" + login + " PASSWORD MAIN:" + password);
+                flag = true; 
+            }
+        }
+        
+        return flag;
+    }
+    
+    public static int cantidad_datos(Session session) {
+       int last = 0;
+        ResultSet results = session.execute("SELECT idclase FROM clase");
+        for (Row row : results) {
+            last++;
+        }
+        return last;
+    }
+    
+    //añadir a la tabla clase
+    public static void insertClase(Session session, int idClase, String nombreClase){
+        String insert = "";
+        insert += idClase + ",'" + nombreClase + "'";
+        session.execute("INSERT INTO CLASE (idclase, nombreclase) VALUES (" + insert + ")");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -701,7 +769,6 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
@@ -732,7 +799,6 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jpm_opcionesClase_admin;
     private javax.swing.JTable jt_clases_admin;
     private javax.swing.JTextField tf_apellidos_registrar;
-    private javax.swing.JTextField tf_idClase_admin;
     private javax.swing.JTextField tf_login_username;
     private javax.swing.JTextField tf_nombreClase_admin;
     private javax.swing.JTextField tf_nombres_registrar;

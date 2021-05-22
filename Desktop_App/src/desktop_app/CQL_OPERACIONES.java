@@ -19,6 +19,11 @@ import java.util.ArrayList;
 public class CQL_OPERACIONES {
     private static Cluster cluster;
     private static Session session;
+
+    public CQL_OPERACIONES() {
+    }
+    
+    
     
     
     
@@ -76,7 +81,7 @@ public class CQL_OPERACIONES {
         return flag;
     }
     
-    //metodo que retorna el último id
+    //metodo que retorna el último id de alumno
     public static int lastID_Alumno(){
         int last = 0;
         ResultSet results = session.execute("SELECT ida FROM alumno");
@@ -87,23 +92,15 @@ public class CQL_OPERACIONES {
         
     }
     
-    //inicio de sesión
-    public static boolean matchInfo(String login, String password){
-        boolean flag = false;
-        String loginDB = "";
-        String passDB = "";
-        ResultSet results = session.execute("SELECT * FROM alumno");
+    //metodo que retorna el último id de clase
+    public static int lastID_Clase(){
+        int last = 0;
+        ResultSet results = session.execute("SELECT idclase FROM clase");
         for (Row row : results) {
-            loginDB = row.getString("login");
-            passDB = row.getString("contrasena");
-            if (login.equals(loginDB) && password.equals(passDB)) {
-                System.out.println("LOGIN:" + loginDB + " PASSWORD:" + passDB);
-                System.out.println("LOGIN MAIN:" + login + " PASSWORD MAIN:" + password);
-                flag = true; 
-            }
+            last++;
         }
-        
-        return flag;
+        return last;
     }
+    
     
 }
