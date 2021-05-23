@@ -1342,7 +1342,9 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_regresarAadmin_preguntasMouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        
+        id_ClaseList = new ArrayList<>();
+        calificaciónGlobal = 0;
+        counterQ = 0;
         cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
         session = cluster.connect("proyecto");
         Map<Integer,Integer> resultadosExamen = new HashMap<Integer,Integer>();
@@ -1385,7 +1387,7 @@ public class LogIn extends javax.swing.JFrame {
                     id_ClaseList.add(idClase_consulta);
                 }
                 Collections.shuffle(id_ClaseList);
-                
+                System.out.println(id_ClaseList);
                 session.close();
                 cluster.close();
                 jd_alumno.setVisible(false);
@@ -1416,6 +1418,8 @@ public class LogIn extends javax.swing.JFrame {
         String tituloP,descripciónP;
         
         int idPregunta = id_ClaseList.get(counterQ);
+        System.out.println("PRIMER COUNTER: " + counterQ);
+        System.out.println("PRIMER ID_PREGUNTA: " + idPregunta);
         ResultSet results2 = session.execute("SELECT * FROM preguntas WHERE idp = " +
             idPregunta + " ALLOW FILTERING");
         
@@ -1434,8 +1438,14 @@ public class LogIn extends javax.swing.JFrame {
                 if(respuestaA == respuestaP)
                     calificaciónGlobal += 5;
             }
+            
             counterQ++;
-            idPregunta = id_ClaseList.get(counterQ);
+            System.out.println("SEGUNDO COUNTER: " + counterQ);
+            if (counterQ < id_ClaseList.size()) {
+                idPregunta = id_ClaseList.get(counterQ);
+            }
+            System.out.println("SEGUNDO ID:PREGUNTA: " + idPregunta);
+            
             ResultSet results3 = session.execute("SELECT * FROM preguntas WHERE idp = " +
             idPregunta + " ALLOW FILTERING");
             for (Row row_1 : results3) {
@@ -1444,6 +1454,7 @@ public class LogIn extends javax.swing.JFrame {
                 jl_mostrarTitulo_Pregunta.setText(tituloP);
                 ta_mostrarContenidoPregunta.setText(descripciónP);
                 rb_RespuestaEnExamenV.setSelected(true);
+                
             }
             session.close();
             cluster.close();
@@ -1466,8 +1477,11 @@ public class LogIn extends javax.swing.JFrame {
             Object[] newRow = {id_ExamenGlobal,Clase_alumno,calificaciónGlobal};
             modelC.addRow(newRow);
             jt_misCalificaciones.setModel(modelC);
+            ta_mostrarContenidoPregunta.setText("");
+            jl_mostrarTitulo_Pregunta.setText("");
             session.close();
             cluster.close();
+            counterQ = 0;
             jd_hacerExamen.dispose();
             jd_alumno.setVisible(true);
         }
