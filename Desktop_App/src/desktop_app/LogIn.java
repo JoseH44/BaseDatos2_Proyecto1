@@ -11,6 +11,7 @@ import com.github.cassandra.jdbc.internal.datastax.driver.core.Session;
 import com.github.cassandra.jdbc.internal.google.common.reflect.TypeToken;
 import java.security.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -119,13 +120,20 @@ public class LogIn extends javax.swing.JFrame {
         ta_infoExamen_admin = new javax.swing.JTextArea();
         bg_respuesta_admin = new javax.swing.ButtonGroup();
         jd_mostrarPreguntas = new javax.swing.JDialog();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        ta_infoPreguntas_admin = new javax.swing.JTextArea();
         jb_regresarAadmin_preguntas = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jl_preguntasClase = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jt_showPreguntas = new javax.swing.JTable();
         jd_hacerExamen = new javax.swing.JDialog();
         jLabel18 = new javax.swing.JLabel();
+        jl_mostrarTitulo_Pregunta = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        ta_mostrarContenidoPregunta = new javax.swing.JTextArea();
+        jb_siguiente = new javax.swing.JButton();
+        rb_RespuestaEnExamenV = new javax.swing.JRadioButton();
+        rb_respuestaEnExamenF = new javax.swing.JRadioButton();
+        bg_respuestasAlumno = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_login_username = new javax.swing.JTextField();
@@ -687,11 +695,6 @@ public class LogIn extends javax.swing.JFrame {
 
         jd_mostrarPreguntas.setTitle("PREGUNTAS DE LA CLASE");
 
-        ta_infoPreguntas_admin.setEditable(false);
-        ta_infoPreguntas_admin.setColumns(20);
-        ta_infoPreguntas_admin.setRows(5);
-        jScrollPane4.setViewportView(ta_infoPreguntas_admin);
-
         jb_regresarAadmin_preguntas.setText("Aceptar");
         jb_regresarAadmin_preguntas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -705,38 +708,63 @@ public class LogIn extends javax.swing.JFrame {
         jl_preguntasClase.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jl_preguntasClase.setText("jLabel18");
 
+        jt_showPreguntas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "TITULO", "DESCRIPCION", "RESPUESTA"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane8.setViewportView(jt_showPreguntas);
+
         javax.swing.GroupLayout jd_mostrarPreguntasLayout = new javax.swing.GroupLayout(jd_mostrarPreguntas.getContentPane());
         jd_mostrarPreguntas.getContentPane().setLayout(jd_mostrarPreguntasLayout);
         jd_mostrarPreguntasLayout.setHorizontalGroup(
             jd_mostrarPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarPreguntasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jb_regresarAadmin_preguntas)
-                .addGap(229, 229, 229))
             .addGroup(jd_mostrarPreguntasLayout.createSequentialGroup()
+                .addGap(175, 175, 175)
+                .addComponent(jLabel17)
+                .addGap(50, 50, 50)
+                .addComponent(jl_preguntasClase)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarPreguntasLayout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(jd_mostrarPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jd_mostrarPreguntasLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jd_mostrarPreguntasLayout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(jLabel17)
-                        .addGap(18, 18, 18)
-                        .addComponent(jl_preguntasClase)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarPreguntasLayout.createSequentialGroup()
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarPreguntasLayout.createSequentialGroup()
+                        .addComponent(jb_regresarAadmin_preguntas)
+                        .addGap(291, 291, 291))))
         );
         jd_mostrarPreguntasLayout.setVerticalGroup(
             jd_mostrarPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarPreguntasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
                 .addGroup(jd_mostrarPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(jl_preguntasClase))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jb_regresarAadmin_preguntas)
-                .addGap(21, 21, 21))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jd_hacerExamen.setTitle("EXAMEN");
@@ -744,21 +772,63 @@ public class LogIn extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setText("¡ÉXITO!");
 
+        jl_mostrarTitulo_Pregunta.setText("jLabel19");
+
+        ta_mostrarContenidoPregunta.setEditable(false);
+        ta_mostrarContenidoPregunta.setColumns(20);
+        ta_mostrarContenidoPregunta.setRows(5);
+        jScrollPane6.setViewportView(ta_mostrarContenidoPregunta);
+
+        jb_siguiente.setText("Siguiente");
+        jb_siguiente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_siguienteMouseClicked(evt);
+            }
+        });
+
+        bg_respuestasAlumno.add(rb_RespuestaEnExamenV);
+        rb_RespuestaEnExamenV.setText("V");
+
+        bg_respuestasAlumno.add(rb_respuestaEnExamenF);
+        rb_respuestaEnExamenF.setText("F");
+
         javax.swing.GroupLayout jd_hacerExamenLayout = new javax.swing.GroupLayout(jd_hacerExamen.getContentPane());
         jd_hacerExamen.getContentPane().setLayout(jd_hacerExamenLayout);
         jd_hacerExamenLayout.setHorizontalGroup(
             jd_hacerExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_hacerExamenLayout.createSequentialGroup()
-                .addGap(229, 229, 229)
-                .addComponent(jLabel18)
-                .addContainerGap(236, Short.MAX_VALUE))
+                .addGroup(jd_hacerExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_hacerExamenLayout.createSequentialGroup()
+                        .addGap(229, 229, 229)
+                        .addComponent(jLabel18))
+                    .addGroup(jd_hacerExamenLayout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addGroup(jd_hacerExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jd_hacerExamenLayout.createSequentialGroup()
+                                .addGap(105, 105, 105)
+                                .addComponent(jb_siguiente))
+                            .addComponent(rb_RespuestaEnExamenV)
+                            .addComponent(rb_respuestaEnExamenF)
+                            .addComponent(jl_mostrarTitulo_Pregunta)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
         jd_hacerExamenLayout.setVerticalGroup(
             jd_hacerExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_hacerExamenLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel18)
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addComponent(jl_mostrarTitulo_Pregunta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(rb_RespuestaEnExamenV)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rb_respuestaEnExamenF)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(jb_siguiente)
+                .addGap(28, 28, 28))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -933,7 +1003,7 @@ public class LogIn extends javax.swing.JFrame {
                     jt_examenesAlumno.setModel(modelExa);
                     //Parte del llenado de tabla de calificaciones
                     DefaultTableModel modelCali = (DefaultTableModel) jt_misCalificaciones.getModel();
-                    int idAlumn = matchAlumnoID(session, userLog, passLog);
+                    idAlumn = matchAlumnoID(session, userLog, passLog);
                     Map<Integer,Integer> resultadosExa = new HashMap<Integer,Integer>();
                     ResultSet resultFind = session.execute("SELECT * FROM alumno WHERE ida = " +
                             idAlumn + " ALLOW FILTERING");
@@ -1183,8 +1253,9 @@ public class LogIn extends javax.swing.JFrame {
         clase = (String) modelTable.getValueAt(jt_clases_admin.getSelectedRow(), 1);
         int counter = 0;
         int idP;
-        String cadena = "ID   |      TITULO     |     DESCRIPCION    |     RESPUESTA"+"\n", titulo, descripcion, respuestaChar;
+        String titulo, descripcion, respuestaChar;
         boolean respuesta;
+        DefaultTableModel model2 = (DefaultTableModel)jt_showPreguntas.getModel();
         ResultSet results = session.execute("SELECT * FROM preguntas WHERE idclase = " + id_clase 
                 + " ALLOW FILTERING");
         for (Row row : results) {
@@ -1197,12 +1268,12 @@ public class LogIn extends javax.swing.JFrame {
                 respuestaChar = "V";
             else
                 respuestaChar = "F";
-            cadena += idP + "       " + titulo + "     " + descripcion + "     " +
-            respuestaChar + "\n";
-            ta_infoPreguntas_admin.setText(cadena);
-            jl_preguntasClase.setText(clase);
             
+            jl_preguntasClase.setText(clase);
+            Object[] newRow = {idP,titulo,descripcion,respuesta};
+            model2.addRow(newRow);
         }
+        jt_showPreguntas.setModel(model2);
         if (counter > 0) {
             
             session.close();
@@ -1223,24 +1294,149 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_jm_verPreguntasActionPerformed
 
     private void jb_regresarAadmin_preguntasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresarAadmin_preguntasMouseClicked
-        ta_infoPreguntas_admin.setText("");
+        jt_showPreguntas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "TITULO", "DESCRIPCION", "RESPUESTA"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jd_mostrarPreguntas.dispose();
         jd_admin.setVisible(true);
     }//GEN-LAST:event_jb_regresarAadmin_preguntasMouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        
+        cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
+        session = cluster.connect("proyecto");
+        Map<Integer,Integer> resultadosExamen = new HashMap<Integer,Integer>();
+        ResultSet resultFind = session.execute("SELECT * FROM alumno WHERE ida = " +
+            idAlumn + " ALLOW FILTERING");
+        for (Row row : resultFind) {
+            resultadosExamen = (row.getMap("resultados_examenes", TypeToken.of(Integer.class), TypeToken.of(Integer.class)));             
+        }
+        
+        
+        
         if (jt_examenesAlumno.getSelectedRow() >= 0) {
-            jd_alumno.setVisible(false);
-            jd_hacerExamen.pack();
-            jd_hacerExamen.setModal(true);
-            jd_hacerExamen.setLocationRelativeTo(jd_admin);
-            jd_hacerExamen.setVisible(true);  
+            id_ExamenGlobal = (int)jt_examenesAlumno.getValueAt(jt_examenesAlumno.getSelectedRow(), 0);
+            Clase_alumno = (String)jt_examenesAlumno.getValueAt(jt_examenesAlumno.getSelectedRow(), 1);
+            ResultSet resultCon = session.execute("SELECT * FROM examen WHERE ide = " +
+            id_ExamenGlobal + " ALLOW FILTERING");
+            for (Row row1 : resultCon) {
+                cantidadPreguntasExamenGlobal = row1.getInt("num_preguntas");
+            }
+            
+            if (resultadosExamen.containsKey(id_ExamenGlobal)) {
+                JOptionPane.showMessageDialog(jd_alumno, "Usted Ya ha Realizado este Examen");
+                session.close();
+                cluster.close();
+            }else{
+                //consulta para seleccionar el id de la clase.
+                int id_clase_general = 0;
+                ResultSet result = session.execute("SELECT * FROM examen WHERE ide = " +
+                id_ExamenGlobal + " ALLOW FILTERING");
+                for (Row row1 : result) {
+                    id_clase_general = row1.getInt("idclase");
+                }
+                
+                //consulta para seleccionar los id de las preguntas de clase.
+                int idClase_consulta;
+                ResultSet resultIDCLASS = session.execute("SELECT * FROM preguntas WHERE idclase = " +
+                id_clase_general + " ALLOW FILTERING");
+                for (Row rowrow : resultIDCLASS) {
+                    idClase_consulta = rowrow.getInt("idp");
+                    id_ClaseList.add(idClase_consulta);
+                }
+                Collections.shuffle(id_ClaseList);
+                
+                session.close();
+                cluster.close();
+                jd_alumno.setVisible(false);
+                jd_hacerExamen.pack();
+                jd_hacerExamen.setModal(true);
+                jd_hacerExamen.setLocationRelativeTo(jd_admin);
+                jd_hacerExamen.setVisible(true); 
+            }
+             
         }else{
             JOptionPane.showMessageDialog(jd_alumno, "Debe Seleccionar un Examen \n"
                     + "       De la tabla");
+            session.close();
+            cluster.close();
         }
         
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jb_siguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_siguienteMouseClicked
+        cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
+        session = cluster.connect("proyecto");
+        
+        
+        //consulta para seleccionar la información de la pregunta
+        calificaciónGlobal = 0;
+        
+        boolean respuestaP,respuestaA;
+        String tituloP,descripciónP;
+        /*ResultSet results2 = session.execute("SELECT * FROM preguntas WHERE idclase = " +
+            id_clase_general + " ALLOW FILTERING");
+        for (Row row2 : results2) {
+            if (counterQ < cantidadPreguntasExamenGlobal) {
+                tituloP = row2.getString("titulo");
+                descripciónP = row2.getString("descripcion");
+                respuestaP = row2.getBool("respuesta");
+                if (rb_RespuestaEnExamenV.isSelected())
+                    respuestaA = true;
+                else
+                    respuestaA = false;
+                jl_mostrarTitulo_Pregunta.setText(tituloP);
+                ta_mostrarContenidoPregunta.setText(descripciónP);
+                if(respuestaA == respuestaP)
+                    calificación += 5;
+                
+            }
+        }*/
+        
+        int idPregunta = id_ClaseList.get(counterQ);
+        ResultSet results2 = session.execute("SELECT * FROM preguntas WHERE idp = " +
+            idPregunta + " ALLOW FILTERING");
+        if (counterQ < cantidadPreguntasExamenGlobal) {
+            for (Row rowP : results2) {
+                tituloP = rowP.getString("titulo");
+                descripciónP = rowP.getString("descripcion");
+                respuestaP = rowP.getBool("respuesta");
+                if (rb_RespuestaEnExamenV.isSelected())
+                    respuestaA = true;
+                else
+                    respuestaA = false;
+                jl_mostrarTitulo_Pregunta.setText(tituloP);
+                ta_mostrarContenidoPregunta.setText(descripciónP);
+                if(respuestaA == respuestaP)
+                    calificaciónGlobal += 5;
+         } 
+        }
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jb_siguienteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1350,6 +1546,7 @@ public class LogIn extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bg_respuesta_admin;
+    private javax.swing.ButtonGroup bg_respuestasAlumno;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -1375,9 +1572,10 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JButton jb_ConfirmarAgregarClase_admin;
     private javax.swing.JButton jb_agregarClase_admin;
@@ -1391,6 +1589,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JButton jb_regresarAadmin_p;
     private javax.swing.JButton jb_regresarAadmin_preguntas;
     private javax.swing.JButton jb_regresar_registro;
+    private javax.swing.JButton jb_siguiente;
     private javax.swing.JDialog jd_AgregarClase;
     private javax.swing.JDialog jd_admin;
     private javax.swing.JDialog jd_alumno;
@@ -1401,6 +1600,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JDialog jd_mostrarPreguntas;
     private javax.swing.JDialog jd_registro;
     private javax.swing.JLabel jl_className;
+    private javax.swing.JLabel jl_mostrarTitulo_Pregunta;
     private javax.swing.JLabel jl_nombreClae_Examen_admin;
     private javax.swing.JLabel jl_preguntasClase;
     private javax.swing.JMenuItem jm_CrearExamen;
@@ -1415,11 +1615,14 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JTable jt_clases_admin;
     private javax.swing.JTable jt_examenesAlumno;
     private javax.swing.JTable jt_misCalificaciones;
+    private javax.swing.JTable jt_showPreguntas;
+    private javax.swing.JRadioButton rb_RespuestaEnExamenV;
     private javax.swing.JRadioButton rb_falso_admin;
+    private javax.swing.JRadioButton rb_respuestaEnExamenF;
     private javax.swing.JRadioButton rb_verdadero_admin;
     private javax.swing.JTextArea ta_descripcion_admin;
     private javax.swing.JTextArea ta_infoExamen_admin;
-    private javax.swing.JTextArea ta_infoPreguntas_admin;
+    private javax.swing.JTextArea ta_mostrarContenidoPregunta;
     private javax.swing.JTextField tf_apellidos_registrar;
     private javax.swing.JTextField tf_login_username;
     private javax.swing.JTextField tf_nombreClase_admin;
@@ -1431,4 +1634,11 @@ Cluster cluster;
 Session session;
 int id_clase;
 String clase;
+int id_ExamenGlobal;
+int idAlumn;
+int cantidadPreguntasExamenGlobal;
+ArrayList<Integer> id_ClaseList = new ArrayList<>();
+int counterQ = 0;
+int calificaciónGlobal = 0;
+String Clase_alumno;
 }
