@@ -1429,7 +1429,11 @@ public class LogIn extends javax.swing.JFrame {
                 ta_mostrarContenidoPregunta.setText(descripciónP);
                 if(respuestaA == respuestaP)
                     calificaciónGlobal += 5;
-         } 
+            } 
+            session.close();
+            cluster.close();
+        }else{
+            
         }
         
         
