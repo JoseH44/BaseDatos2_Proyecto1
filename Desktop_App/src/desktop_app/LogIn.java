@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package desktop_app;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.BoundStatement;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Cluster;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.PreparedStatement;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.ResultSet;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Row;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Session;
@@ -1454,11 +1456,16 @@ public class LogIn extends javax.swing.JFrame {
             DefaultTableModel modelC = (DefaultTableModel)jt_misCalificaciones.getModel();
             JOptionPane.showMessageDialog(jd_hacerExamen, "EL EXAMEN HA TERMINADO\n"
                     + "Nota: " + calificaciónGlobal + "/" + total);
+            
+            //consulta para meterlo a la base de datos
+            cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
+            session = cluster.connect("proyecto");
+            session.execute("INSERT INTO CLASE (idclase,nombreclase) VALUES (" + 50 + ",'prueba')");
+            insertNota(session, idAlumn, id_ExamenGlobal, calificaciónGlobal);
+            //meter datos a la tabla
             Object[] newRow = {id_ExamenGlobal,Clase_alumno,calificaciónGlobal};
             modelC.addRow(newRow);
             jt_misCalificaciones.setModel(modelC);
-            //consulta para meterlo a la base de datos
-            insertNota(session, idAlumn, id_ExamenGlobal, calificaciónGlobal);
             session.close();
             cluster.close();
             jd_hacerExamen.dispose();
@@ -1607,17 +1614,24 @@ public class LogIn extends javax.swing.JFrame {
     }
     
     public static void insertNota(Session session, int idAlumno, int idExamen, int nota){
-        /*String query = "UPDATE proyecto.alumno" +
-                " SET resultados_examenes = resultados_examenes + {" + idExamen +
-                ":" + nota + "}" +
-                " WHERE ida = " + idAlumno;
-        System.out.println("QUERY:" + query);
-        SimpleStatement statement = new SimpleStatement(query);
-        session.execute(statement);*/
-        Map<Integer,Integer> map = Maps.newHashMap();
-        map.put(idExamen, nota);
-        Statement updateMap = update("alumno").with(QueryBuilder.putAll("resultados_examenes", map)).where(eq("ida",1));
-        Update update = QueryBuilder.update("proyecto", "alumno");
+        
+        String query = "UPDATE alumno SET resultados_examenes = resultados_examenes + ";
+        query += "{" + idExamen + ":" + nota + "} ";
+        query += "WHERE ida = " + idAlumno;
+        /*PreparedStatement preparedStatement = session.prepare(query);
+        BoundStatement boundStatement = preparedStatement.bind("alumno");
+        session.execute(boundStatement);*/
+        session.execute(query);
+        /*Map<Integer,Integer> map = Maps.newHashMap();
+        map.put(idExamen, nota);*/
+        //Update update = QueryBuilder.update("proyecto", "alumno");
+        
+        /*Statement updateMap = (Statement) QueryBuilder.update("alumno").with(QueryBuilder.put("resultados_examenes", idExamen, nota)).where(eq("ida", idAlumno));
+        System.out.println(updateMap);
+        session.execute((com.github.cassandra.jdbc.internal.datastax.driver.core.Statement) updateMap);*/
+        
+        /*Update update = QueryBuilder.update("proyecto", "alumno");
+        update.with(QueryBuilder.put("resultados_examenes", idExamen, nota)).where(eq("ida", idAlumno));*/
         
         //QueryBuilder.put("resultados_examenes", idExamen, nota);
         
