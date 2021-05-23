@@ -109,6 +109,8 @@ public class LogIn extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         ta_infoPreguntas_admin = new javax.swing.JTextArea();
         jb_regresarAadmin_preguntas = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        jl_preguntasClase = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_login_username = new javax.swing.JTextField();
@@ -579,23 +581,40 @@ public class LogIn extends javax.swing.JFrame {
             }
         });
 
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel17.setText("PREGUNTAS DE:");
+
+        jl_preguntasClase.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jl_preguntasClase.setText("jLabel18");
+
         javax.swing.GroupLayout jd_mostrarPreguntasLayout = new javax.swing.GroupLayout(jd_mostrarPreguntas.getContentPane());
         jd_mostrarPreguntas.getContentPane().setLayout(jd_mostrarPreguntasLayout);
         jd_mostrarPreguntasLayout.setHorizontalGroup(
             jd_mostrarPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_mostrarPreguntasLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarPreguntasLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jb_regresarAadmin_preguntas)
                 .addGap(229, 229, 229))
+            .addGroup(jd_mostrarPreguntasLayout.createSequentialGroup()
+                .addGroup(jd_mostrarPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_mostrarPreguntasLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jd_mostrarPreguntasLayout.createSequentialGroup()
+                        .addGap(166, 166, 166)
+                        .addComponent(jLabel17)
+                        .addGap(18, 18, 18)
+                        .addComponent(jl_preguntasClase)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jd_mostrarPreguntasLayout.setVerticalGroup(
             jd_mostrarPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarPreguntasLayout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jd_mostrarPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jl_preguntasClase))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jb_regresarAadmin_preguntas)
@@ -989,6 +1008,7 @@ public class LogIn extends javax.swing.JFrame {
             cadena += idP + "       " + titulo + "     " + descripcion + "     " +
             respuestaChar + "\n";
             ta_infoPreguntas_admin.setText(cadena);
+            jl_preguntasClase.setText(clase);
             
         }
         if (counter > 0) {
@@ -1115,6 +1135,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1149,6 +1170,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JDialog jd_registro;
     private javax.swing.JLabel jl_className;
     private javax.swing.JLabel jl_nombreClae_Examen_admin;
+    private javax.swing.JLabel jl_preguntasClase;
     private javax.swing.JMenuItem jm_CrearExamen;
     private javax.swing.JMenuItem jm_agregarPregunta;
     private javax.swing.JMenuItem jm_mostrarExamen;
