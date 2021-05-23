@@ -905,15 +905,17 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
-                                  <Component id="jb_siguiente" min="-2" max="-2" attributes="0"/>
-                              </Group>
                               <Component id="rb_RespuestaEnExamenV" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="rb_respuestaEnExamenF" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jl_mostrarTitulo_Pregunta" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane6" min="-2" pref="295" max="-2" attributes="0"/>
                           </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="153" max="-2" attributes="0"/>
+                          <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="jb_siguiente" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="114" max="32767" attributes="0"/>
@@ -934,7 +936,10 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="rb_respuestaEnExamenF" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="33" max="32767" attributes="0"/>
-                  <Component id="jb_siguiente" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jb_siguiente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -993,6 +998,14 @@
             </Property>
             <Property name="text" type="java.lang.String" value="F"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Iniciar Examen"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton3MouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

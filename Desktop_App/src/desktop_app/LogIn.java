@@ -8,7 +8,13 @@ import com.github.cassandra.jdbc.internal.datastax.driver.core.Cluster;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.ResultSet;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Row;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Session;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.SimpleStatement;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.querybuilder.QueryBuilder;
+import static com.github.cassandra.jdbc.internal.datastax.driver.core.querybuilder.QueryBuilder.eq;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.querybuilder.Update;
+import com.github.cassandra.jdbc.internal.google.common.collect.Maps;
 import com.github.cassandra.jdbc.internal.google.common.reflect.TypeToken;
+import com.github.cassandra.jdbc.internal.jsqlparser.statement.Statement;
 import java.security.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -133,6 +139,7 @@ public class LogIn extends javax.swing.JFrame {
         jb_siguiente = new javax.swing.JButton();
         rb_RespuestaEnExamenV = new javax.swing.JRadioButton();
         rb_respuestaEnExamenF = new javax.swing.JRadioButton();
+        jButton3 = new javax.swing.JButton();
         bg_respuestasAlumno = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -792,6 +799,13 @@ public class LogIn extends javax.swing.JFrame {
         bg_respuestasAlumno.add(rb_respuestaEnExamenF);
         rb_respuestaEnExamenF.setText("F");
 
+        jButton3.setText("Iniciar Examen");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jd_hacerExamenLayout = new javax.swing.GroupLayout(jd_hacerExamen.getContentPane());
         jd_hacerExamen.getContentPane().setLayout(jd_hacerExamenLayout);
         jd_hacerExamenLayout.setHorizontalGroup(
@@ -804,13 +818,15 @@ public class LogIn extends javax.swing.JFrame {
                     .addGroup(jd_hacerExamenLayout.createSequentialGroup()
                         .addGap(112, 112, 112)
                         .addGroup(jd_hacerExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jd_hacerExamenLayout.createSequentialGroup()
-                                .addGap(105, 105, 105)
-                                .addComponent(jb_siguiente))
                             .addComponent(rb_RespuestaEnExamenV)
                             .addComponent(rb_respuestaEnExamenF)
                             .addComponent(jl_mostrarTitulo_Pregunta)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jd_hacerExamenLayout.createSequentialGroup()
+                        .addGap(153, 153, 153)
+                        .addComponent(jButton3)
+                        .addGap(53, 53, 53)
+                        .addComponent(jb_siguiente)))
                 .addContainerGap(114, Short.MAX_VALUE))
         );
         jd_hacerExamenLayout.setVerticalGroup(
@@ -827,7 +843,9 @@ public class LogIn extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rb_respuestaEnExamenF)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(jb_siguiente)
+                .addGroup(jd_hacerExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_siguiente)
+                    .addComponent(jButton3))
                 .addGap(28, 28, 28))
         );
 
@@ -1390,33 +1408,16 @@ public class LogIn extends javax.swing.JFrame {
         
         
         //consulta para seleccionar la información de la pregunta
-        calificaciónGlobal = 0;
+        
         
         boolean respuestaP,respuestaA;
         String tituloP,descripciónP;
-        /*ResultSet results2 = session.execute("SELECT * FROM preguntas WHERE idclase = " +
-            id_clase_general + " ALLOW FILTERING");
-        for (Row row2 : results2) {
-            if (counterQ < cantidadPreguntasExamenGlobal) {
-                tituloP = row2.getString("titulo");
-                descripciónP = row2.getString("descripcion");
-                respuestaP = row2.getBool("respuesta");
-                if (rb_RespuestaEnExamenV.isSelected())
-                    respuestaA = true;
-                else
-                    respuestaA = false;
-                jl_mostrarTitulo_Pregunta.setText(tituloP);
-                ta_mostrarContenidoPregunta.setText(descripciónP);
-                if(respuestaA == respuestaP)
-                    calificación += 5;
-                
-            }
-        }*/
         
         int idPregunta = id_ClaseList.get(counterQ);
         ResultSet results2 = session.execute("SELECT * FROM preguntas WHERE idp = " +
             idPregunta + " ALLOW FILTERING");
-        if (counterQ < cantidadPreguntasExamenGlobal) {
+        
+        if ((counterQ < cantidadPreguntasExamenGlobal) && (started == true)) {
             for (Row rowP : results2) {
                 tituloP = rowP.getString("titulo");
                 descripciónP = rowP.getString("descripcion");
@@ -1427,13 +1428,41 @@ public class LogIn extends javax.swing.JFrame {
                     respuestaA = false;
                 jl_mostrarTitulo_Pregunta.setText(tituloP);
                 ta_mostrarContenidoPregunta.setText(descripciónP);
+                System.out.println("PRUEBA DENTRO DE EXAMEN:" + tituloP + " " + descripciónP);
                 if(respuestaA == respuestaP)
                     calificaciónGlobal += 5;
-            } 
+            }
+            counterQ++;
+            idPregunta = id_ClaseList.get(counterQ);
+            ResultSet results3 = session.execute("SELECT * FROM preguntas WHERE idp = " +
+            idPregunta + " ALLOW FILTERING");
+            for (Row row_1 : results3) {
+                tituloP = row_1.getString("titulo");
+                descripciónP = row_1.getString("descripcion");
+                jl_mostrarTitulo_Pregunta.setText(tituloP);
+                ta_mostrarContenidoPregunta.setText(descripciónP);
+                rb_RespuestaEnExamenV.setSelected(true);
+            }
             session.close();
             cluster.close();
         }else{
-            
+            JOptionPane.showMessageDialog(jd_hacerExamen, "Todavía No ha Iniciado el Examen");
+        }
+        
+        if (counterQ == cantidadPreguntasExamenGlobal) {
+            int total = 5 * cantidadPreguntasExamenGlobal;
+            DefaultTableModel modelC = (DefaultTableModel)jt_misCalificaciones.getModel();
+            JOptionPane.showMessageDialog(jd_hacerExamen, "EL EXAMEN HA TERMINADO\n"
+                    + "Nota: " + calificaciónGlobal + "/" + total);
+            Object[] newRow = {id_ExamenGlobal,Clase_alumno,calificaciónGlobal};
+            modelC.addRow(newRow);
+            jt_misCalificaciones.setModel(modelC);
+            //consulta para meterlo a la base de datos
+            insertNota(session, idAlumn, id_ExamenGlobal, calificaciónGlobal);
+            session.close();
+            cluster.close();
+            jd_hacerExamen.dispose();
+            jd_alumno.setVisible(true);
         }
         
         
@@ -1441,6 +1470,35 @@ public class LogIn extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jb_siguienteMouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
+        session = cluster.connect("proyecto");
+        
+        boolean respuestaP,respuestaA;
+        String tituloP,descripciónP;
+        if (counterQ == 0) {
+            int idPregunta = id_ClaseList.get(counterQ);
+            ResultSet results2 = session.execute("SELECT * FROM preguntas WHERE idp = " +
+                idPregunta + " ALLOW FILTERING");
+            
+            for (Row rowP : results2) {
+                tituloP = rowP.getString("titulo");
+                descripciónP = rowP.getString("descripcion");
+                jl_mostrarTitulo_Pregunta.setText(tituloP);
+                ta_mostrarContenidoPregunta.setText(descripciónP);
+                rb_RespuestaEnExamenV.setSelected(true);
+            } 
+            JOptionPane.showMessageDialog(jd_hacerExamen, "¡EL EXAMEN HA EMPEZADO!");
+            calificaciónGlobal = 0;
+            started = true;
+            session.close();
+            cluster.close();
+            
+        }else{
+            JOptionPane.showMessageDialog(jd_hacerExamen, "Ya Había Iniciado este Examen");
+        }
+    }//GEN-LAST:event_jButton3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1547,12 +1605,30 @@ public class LogIn extends javax.swing.JFrame {
         insert += idClase + ",'" + nombreClase + "'";
         session.execute("INSERT INTO CLASE (idclase, nombreclase) VALUES (" + insert + ")");
     }
+    
+    public static void insertNota(Session session, int idAlumno, int idExamen, int nota){
+        /*String query = "UPDATE proyecto.alumno" +
+                " SET resultados_examenes = resultados_examenes + {" + idExamen +
+                ":" + nota + "}" +
+                " WHERE ida = " + idAlumno;
+        System.out.println("QUERY:" + query);
+        SimpleStatement statement = new SimpleStatement(query);
+        session.execute(statement);*/
+        Map<Integer,Integer> map = Maps.newHashMap();
+        map.put(idExamen, nota);
+        Statement updateMap = update("alumno").with(QueryBuilder.putAll("resultados_examenes", map)).where(eq("ida",1));
+        Update update = QueryBuilder.update("proyecto", "alumno");
+        
+        //QueryBuilder.put("resultados_examenes", idExamen, nota);
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bg_respuesta_admin;
     private javax.swing.ButtonGroup bg_respuestasAlumno;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1645,4 +1721,5 @@ ArrayList<Integer> id_ClaseList = new ArrayList<>();
 int counterQ = 0;
 int calificaciónGlobal = 0;
 String Clase_alumno;
+boolean started;
 }
