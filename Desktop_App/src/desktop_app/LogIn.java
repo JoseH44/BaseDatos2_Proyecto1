@@ -75,6 +75,7 @@ public class LogIn extends javax.swing.JFrame {
         jb_regresarAadmin = new javax.swing.JButton();
         jpm_opcionesClase_admin = new javax.swing.JPopupMenu();
         jm_agregarPregunta = new javax.swing.JMenuItem();
+        jm_verPreguntas = new javax.swing.JMenuItem();
         jm_CrearExamen = new javax.swing.JMenuItem();
         jm_mostrarExamen = new javax.swing.JMenuItem();
         jd_crearPregunta_admin = new javax.swing.JDialog();
@@ -104,6 +105,10 @@ public class LogIn extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         ta_infoExamen_admin = new javax.swing.JTextArea();
         bg_respuesta_admin = new javax.swing.ButtonGroup();
+        jd_mostrarPreguntas = new javax.swing.JDialog();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        ta_infoPreguntas_admin = new javax.swing.JTextArea();
+        jb_regresarAadmin_preguntas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_login_username = new javax.swing.JTextField();
@@ -325,6 +330,14 @@ public class LogIn extends javax.swing.JFrame {
             }
         });
         jpm_opcionesClase_admin.add(jm_agregarPregunta);
+
+        jm_verPreguntas.setText("Mostrar Preguntas");
+        jm_verPreguntas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_verPreguntasActionPerformed(evt);
+            }
+        });
+        jpm_opcionesClase_admin.add(jm_verPreguntas);
 
         jm_CrearExamen.setText("Crear Examen");
         jm_CrearExamen.addActionListener(new java.awt.event.ActionListener() {
@@ -550,6 +563,43 @@ public class LogIn extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(23, 23, 23))
+        );
+
+        jd_mostrarPreguntas.setTitle("PREGUNTAS DE LA CLASE");
+
+        ta_infoPreguntas_admin.setEditable(false);
+        ta_infoPreguntas_admin.setColumns(20);
+        ta_infoPreguntas_admin.setRows(5);
+        jScrollPane4.setViewportView(ta_infoPreguntas_admin);
+
+        jb_regresarAadmin_preguntas.setText("Aceptar");
+        jb_regresarAadmin_preguntas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_regresarAadmin_preguntasMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jd_mostrarPreguntasLayout = new javax.swing.GroupLayout(jd_mostrarPreguntas.getContentPane());
+        jd_mostrarPreguntas.getContentPane().setLayout(jd_mostrarPreguntasLayout);
+        jd_mostrarPreguntasLayout.setHorizontalGroup(
+            jd_mostrarPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_mostrarPreguntasLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarPreguntasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jb_regresarAadmin_preguntas)
+                .addGap(229, 229, 229))
+        );
+        jd_mostrarPreguntasLayout.setVerticalGroup(
+            jd_mostrarPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarPreguntasLayout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jb_regresarAadmin_preguntas)
+                .addGap(21, 21, 21))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -804,7 +854,7 @@ public class LogIn extends javax.swing.JFrame {
         boolean result = CQL_OPERACIONES.ExistsExamen(id_clase);
         int idE = CQL_OPERACIONES.idExamen(id_clase);
         int cant_preguntas = CQL_OPERACIONES.cantPreguntasExamen(idE);
-        System.out.println("NUMERO DE PREGUNTAS EN EL EXAMEN: " + cant_preguntas);
+       
         if (result) {
             CQL_OPERACIONES.endConnection();
             ta_infoExamen_admin.setText(idE + "\n\n" + id_clase +
@@ -912,6 +962,59 @@ public class LogIn extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jb_crearExamenMouseClicked
+
+    private void jm_verPreguntasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_verPreguntasActionPerformed
+        //validación para ver si la clase tiene preguntas
+        DefaultTableModel modelTable = (DefaultTableModel)jt_clases_admin.getModel();
+        cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
+        session = cluster.connect("proyecto");
+        id_clase = (int) modelTable.getValueAt(jt_clases_admin.getSelectedRow(), 0);
+        clase = (String) modelTable.getValueAt(jt_clases_admin.getSelectedRow(), 1);
+        int counter = 0;
+        int idP;
+        String cadena = "ID   |      TITULO     |     DESCRIPCION    |     RESPUESTA"+"\n", titulo, descripcion, respuestaChar;
+        boolean respuesta;
+        ResultSet results = session.execute("SELECT * FROM preguntas WHERE idclase = " + id_clase 
+                + " ALLOW FILTERING");
+        for (Row row : results) {
+            counter++;
+            idP = row.getInt("idp");
+            titulo = row.getString("titulo");
+            descripcion = row.getString("descripcion");
+            respuesta = row.getBool("respuesta");
+            if (respuesta)
+                respuestaChar = "V";
+            else
+                respuestaChar = "F";
+            cadena += idP + "       " + titulo + "     " + descripcion + "     " +
+            respuestaChar + "\n";
+            ta_infoPreguntas_admin.setText(cadena);
+            
+        }
+        if (counter > 0) {
+            
+            session.close();
+            cluster.close();
+            jd_admin.setVisible(false);
+            jd_mostrarPreguntas.pack();
+            jd_mostrarPreguntas.setModal(true);
+            jd_mostrarPreguntas.setLocationRelativeTo(jd_admin);
+            jd_mostrarPreguntas.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(jd_admin, "Esta Clase No Tiene Preguntas");
+            session.close();
+            cluster.close();
+            
+        }
+        
+        
+    }//GEN-LAST:event_jm_verPreguntasActionPerformed
+
+    private void jb_regresarAadmin_preguntasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_regresarAadmin_preguntasMouseClicked
+        ta_infoPreguntas_admin.setText("");
+        jd_mostrarPreguntas.dispose();
+        jd_admin.setVisible(true);
+    }//GEN-LAST:event_jb_regresarAadmin_preguntasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1023,6 +1126,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton jb_ConfirmarAgregarClase_admin;
     private javax.swing.JButton jb_agregarClase_admin;
     private javax.swing.JButton jb_crearExamen;
@@ -1033,6 +1137,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JButton jb_regresarAadmin;
     private javax.swing.JButton jb_regresarAadmin_CE;
     private javax.swing.JButton jb_regresarAadmin_p;
+    private javax.swing.JButton jb_regresarAadmin_preguntas;
     private javax.swing.JButton jb_regresar_registro;
     private javax.swing.JDialog jd_AgregarClase;
     private javax.swing.JDialog jd_admin;
@@ -1040,12 +1145,14 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JDialog jd_crearExamen_admin;
     private javax.swing.JDialog jd_crearPregunta_admin;
     private javax.swing.JDialog jd_mostrarExamen;
+    private javax.swing.JDialog jd_mostrarPreguntas;
     private javax.swing.JDialog jd_registro;
     private javax.swing.JLabel jl_className;
     private javax.swing.JLabel jl_nombreClae_Examen_admin;
     private javax.swing.JMenuItem jm_CrearExamen;
     private javax.swing.JMenuItem jm_agregarPregunta;
     private javax.swing.JMenuItem jm_mostrarExamen;
+    private javax.swing.JMenuItem jm_verPreguntas;
     private javax.swing.JSpinner jp_cantPreguntas_admin;
     private javax.swing.JPasswordField jp_contrasenaConfirm_registro;
     private javax.swing.JPasswordField jp_contrasena_login;
@@ -1056,6 +1163,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JRadioButton rb_verdadero_admin;
     private javax.swing.JTextArea ta_descripcion_admin;
     private javax.swing.JTextArea ta_infoExamen_admin;
+    private javax.swing.JTextArea ta_infoPreguntas_admin;
     private javax.swing.JTextField tf_apellidos_registrar;
     private javax.swing.JTextField tf_login_username;
     private javax.swing.JTextField tf_nombreClase_admin;
