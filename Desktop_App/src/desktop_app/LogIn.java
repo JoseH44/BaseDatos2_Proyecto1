@@ -12,6 +12,7 @@ import com.github.cassandra.jdbc.internal.google.common.reflect.TypeToken;
 import java.security.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -78,8 +79,8 @@ public class LogIn extends javax.swing.JFrame {
         jt_examenesAlumno = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        ta_misExamenes = new javax.swing.JTextArea();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jt_misCalificaciones = new javax.swing.JTable();
         jd_AgregarClase = new javax.swing.JDialog();
         jLabel8 = new javax.swing.JLabel();
         tf_nombreClase_admin = new javax.swing.JTextField();
@@ -334,31 +335,51 @@ public class LogIn extends javax.swing.JFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("EXAMENES", jPanel1);
 
-        ta_misExamenes.setEditable(false);
-        ta_misExamenes.setColumns(20);
-        ta_misExamenes.setRows(5);
-        jScrollPane6.setViewportView(ta_misExamenes);
+        jt_misCalificaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID EXAMEN", "CLASE", "CALIFICACIÓN"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane7.setViewportView(jt_misCalificaciones);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("MIS EXAMENES", jPanel2);
@@ -910,7 +931,8 @@ public class LogIn extends javax.swing.JFrame {
                         modelExa.addRow(newRow);
                     }
                     jt_examenesAlumno.setModel(modelExa);
-                    //aquí empiece el relajo
+                    //Parte del llenado de tabla de calificaciones
+                    DefaultTableModel modelCali = (DefaultTableModel) jt_misCalificaciones.getModel();
                     int idAlumn = matchAlumnoID(session, userLog, passLog);
                     Map<Integer,Integer> resultadosExa = new HashMap<Integer,Integer>();
                     ResultSet resultFind = session.execute("SELECT * FROM alumno WHERE ida = " +
@@ -919,8 +941,32 @@ public class LogIn extends javax.swing.JFrame {
                        resultadosExa = (row.getMap("resultados_examenes", TypeToken.of(Integer.class), TypeToken.of(Integer.class)));
                         
                     }
+                    ResultSet resultC;
+                    int id_Clase2;
+                    String nombreCLass = "";
                     System.out.println("SUPUESTO RESULTADO: "+resultadosExa);
+                    //iterador para agarrar los id de los examenes.
+                    Iterator iteradorPrueba = resultadosExa.keySet().iterator();
+                    while (iteradorPrueba.hasNext()) {
+                        int id_examen = (int)iteradorPrueba.next();
+                        resultC = session.execute("SELECT * FROM examen WHERE ide = " +
+                            id_examen + " ALLOW FILTERING");
+                        for (Row row : resultC) {
+                            id_Clase2 = row.getInt("idclase");
+                            ResultSet busquedaClase = session.execute("SELECT * FROM clase WHERE idclase = " +
+                            id_Clase2 + " ALLOW FILTERING");
+                            for (Row row1 : busquedaClase) {
+                                nombreCLass = row1.getString("nombreclase");
+                            }
+                        }
+                        int calificacion = resultadosExa.get(id_examen);
+                        //llenar tabla
+                        Object[] newRow = {id_examen,nombreCLass,calificacion};
+                        modelCali.addRow(newRow);
+                    }
+                    
                     //end connection
+                    jt_misCalificaciones.setModel(modelCali);
                     session.close();
                     cluster.close();
                     this.setVisible(false);
@@ -1331,7 +1377,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JButton jb_ConfirmarAgregarClase_admin;
     private javax.swing.JButton jb_agregarClase_admin;
@@ -1368,12 +1414,12 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jpm_opcionesClase_admin;
     private javax.swing.JTable jt_clases_admin;
     private javax.swing.JTable jt_examenesAlumno;
+    private javax.swing.JTable jt_misCalificaciones;
     private javax.swing.JRadioButton rb_falso_admin;
     private javax.swing.JRadioButton rb_verdadero_admin;
     private javax.swing.JTextArea ta_descripcion_admin;
     private javax.swing.JTextArea ta_infoExamen_admin;
     private javax.swing.JTextArea ta_infoPreguntas_admin;
-    private javax.swing.JTextArea ta_misExamenes;
     private javax.swing.JTextField tf_apellidos_registrar;
     private javax.swing.JTextField tf_login_username;
     private javax.swing.JTextField tf_nombreClase_admin;
