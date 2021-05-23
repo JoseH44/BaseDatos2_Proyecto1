@@ -68,6 +68,11 @@ public class LogIn extends javax.swing.JFrame {
         jt_clases_admin = new javax.swing.JTable();
         jb_agregarClase_admin = new javax.swing.JButton();
         jd_alumno = new javax.swing.JDialog();
+        jTabbedPane4 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jt_examenesAlumno = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
         jd_AgregarClase = new javax.swing.JDialog();
         jLabel8 = new javax.swing.JLabel();
         tf_nombreClase_admin = new javax.swing.JTextField();
@@ -111,6 +116,8 @@ public class LogIn extends javax.swing.JFrame {
         jb_regresarAadmin_preguntas = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jl_preguntasClase = new javax.swing.JLabel();
+        jd_hacerExamen = new javax.swing.JDialog();
+        jLabel18 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_login_username = new javax.swing.JTextField();
@@ -265,16 +272,74 @@ public class LogIn extends javax.swing.JFrame {
         );
 
         jd_alumno.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jd_alumno.setTitle("PERFIL ALUMNO");
+
+        jt_examenesAlumno.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID EXAMEN", "CLASE", "N° PREGUNTAS"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(jt_examenesAlumno);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(56, Short.MAX_VALUE))
+        );
+
+        jTabbedPane4.addTab("EXAMENES", jPanel1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 538, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 339, Short.MAX_VALUE)
+        );
+
+        jTabbedPane4.addTab("MIS EXAMENES", jPanel2);
 
         javax.swing.GroupLayout jd_alumnoLayout = new javax.swing.GroupLayout(jd_alumno.getContentPane());
         jd_alumno.getContentPane().setLayout(jd_alumnoLayout);
         jd_alumnoLayout.setHorizontalGroup(
             jd_alumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 527, Short.MAX_VALUE)
+            .addComponent(jTabbedPane4)
         );
         jd_alumnoLayout.setVerticalGroup(
             jd_alumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 353, Short.MAX_VALUE)
+            .addComponent(jTabbedPane4)
         );
 
         jLabel8.setText("Nombre de la Clase:");
@@ -621,6 +686,28 @@ public class LogIn extends javax.swing.JFrame {
                 .addGap(21, 21, 21))
         );
 
+        jd_hacerExamen.setTitle("EXAMEN");
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel18.setText("¡ÉXITO!");
+
+        javax.swing.GroupLayout jd_hacerExamenLayout = new javax.swing.GroupLayout(jd_hacerExamen.getContentPane());
+        jd_hacerExamen.getContentPane().setLayout(jd_hacerExamenLayout);
+        jd_hacerExamenLayout.setHorizontalGroup(
+            jd_hacerExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_hacerExamenLayout.createSequentialGroup()
+                .addGap(229, 229, 229)
+                .addComponent(jLabel18)
+                .addContainerGap(236, Short.MAX_VALUE))
+        );
+        jd_hacerExamenLayout.setVerticalGroup(
+            jd_hacerExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_hacerExamenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel18)
+                .addContainerGap(253, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOG-IN");
 
@@ -774,6 +861,23 @@ public class LogIn extends javax.swing.JFrame {
                     jd_admin.setLocationRelativeTo(this);
                     jd_admin.setVisible(true);
                 }else{
+                    DefaultTableModel modelExa = (DefaultTableModel)jt_examenesAlumno.getModel();
+                    int idExamen, numPreguntasExa,idClase;
+                    String clase = "";
+                    ResultSet results = session.execute("SELECT * FROM examen");
+                    for (Row row : results) {
+                        idExamen = row.getInt("ide");
+                        numPreguntasExa = row.getInt("num_preguntas");
+                        idClase = row.getInt("idclase");
+                        ResultSet resultSub = session.execute("SELECT * FROM clase WHERE idclase = " 
+                                + idClase + " ALLOW FILTERING");
+                        for (Row row1 : resultSub) {
+                            clase = row1.getString("nombreclase");
+                        }
+                        Object[] newRow = {idExamen,clase,numPreguntasExa};
+                        modelExa.addRow(newRow);
+                    }
+                    jt_examenesAlumno.setModel(modelExa);
                     //end connection
                     session.close();
                     cluster.close();
@@ -1136,6 +1240,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1144,10 +1249,14 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JButton jb_ConfirmarAgregarClase_admin;
     private javax.swing.JButton jb_agregarClase_admin;
     private javax.swing.JButton jb_crearExamen;
@@ -1165,6 +1274,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JDialog jd_alumno;
     private javax.swing.JDialog jd_crearExamen_admin;
     private javax.swing.JDialog jd_crearPregunta_admin;
+    private javax.swing.JDialog jd_hacerExamen;
     private javax.swing.JDialog jd_mostrarExamen;
     private javax.swing.JDialog jd_mostrarPreguntas;
     private javax.swing.JDialog jd_registro;
@@ -1181,6 +1291,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JPasswordField jp_contrasena_registro;
     private javax.swing.JPopupMenu jpm_opcionesClase_admin;
     private javax.swing.JTable jt_clases_admin;
+    private javax.swing.JTable jt_examenesAlumno;
     private javax.swing.JRadioButton rb_falso_admin;
     private javax.swing.JRadioButton rb_verdadero_admin;
     private javax.swing.JTextArea ta_descripcion_admin;
