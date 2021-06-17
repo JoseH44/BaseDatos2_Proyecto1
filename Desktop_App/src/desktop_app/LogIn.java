@@ -6,6 +6,7 @@
 package desktop_app;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.BoundStatement;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Cluster;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.LocalDate;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.PreparedStatement;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.ResultSet;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Row;
@@ -130,6 +131,7 @@ public class LogIn extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         ta_infoExamen_admin = new javax.swing.JTextArea();
+        jLabel20 = new javax.swing.JLabel();
         bg_respuesta_admin = new javax.swing.ButtonGroup();
         jd_mostrarPreguntas = new javax.swing.JDialog();
         jb_regresarAadmin_preguntas = new javax.swing.JButton();
@@ -681,40 +683,44 @@ public class LogIn extends javax.swing.JFrame {
         ta_infoExamen_admin.setRows(5);
         jScrollPane3.setViewportView(ta_infoExamen_admin);
 
+        jLabel20.setText("Fecha de Aplicación:");
+
         javax.swing.GroupLayout jd_mostrarExamenLayout = new javax.swing.GroupLayout(jd_mostrarExamen.getContentPane());
         jd_mostrarExamen.getContentPane().setLayout(jd_mostrarExamenLayout);
         jd_mostrarExamenLayout.setHorizontalGroup(
             jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_mostrarExamenLayout.createSequentialGroup()
-                .addGroup(jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jd_mostrarExamenLayout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addGroup(jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel16))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jd_mostrarExamenLayout.createSequentialGroup()
-                        .addGap(210, 210, 210)
-                        .addComponent(jButton1)))
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addGap(78, 78, 78)
+                .addGroup(jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(108, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarExamenLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(209, 209, 209))
         );
         jd_mostrarExamenLayout.setVerticalGroup(
             jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarExamenLayout.createSequentialGroup()
                 .addGap(52, 52, 52)
-                .addGroup(jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jd_mostrarExamenLayout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel16))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addComponent(jLabel20))
+                    .addComponent(jScrollPane3))
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(23, 23, 23))
+                .addGap(16, 16, 16))
         );
 
         jd_mostrarPreguntas.setTitle("PREGUNTAS DE LA CLASE");
@@ -1170,11 +1176,12 @@ public class LogIn extends javax.swing.JFrame {
         boolean result = CQL_OPERACIONES.ExistsExamen(id_clase);
         int idE = CQL_OPERACIONES.idExamen(id_clase);
         int cant_preguntas = CQL_OPERACIONES.cantPreguntasExamen(idE);
+        LocalDate date = CQL_OPERACIONES.fechaAplicacion(idE);
        
         if (result) {
             CQL_OPERACIONES.endConnection();
             ta_infoExamen_admin.setText(idE + "\n\n" + id_clase +
-                    "\n\n" + cant_preguntas);
+                    "\n\n" + cant_preguntas + "\n\n" + date);
             jd_admin.setVisible(false);
             jd_mostrarExamen.pack();
             jd_mostrarExamen.setModal(true);
@@ -1689,6 +1696,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

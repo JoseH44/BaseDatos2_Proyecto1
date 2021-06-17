@@ -6,6 +6,7 @@
 package desktop_app;
 
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Cluster;
+import com.github.cassandra.jdbc.internal.datastax.driver.core.LocalDate;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.ResultSet;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Row;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Session;
@@ -169,6 +170,17 @@ public class CQL_OPERACIONES {
             resultado = row.getInt("num_preguntas");
         }
         return resultado;
+    }
+    
+    //metodo que retorna la fecha de aplicación del examen
+    public static LocalDate fechaAplicacion(int idExamen){
+        LocalDate fecha = null;
+        ResultSet results = session.execute("SELECT * FROM examen WHERE ide = " 
+                + idExamen + " ALLOW FILTERING");
+        for (Row row : results) {
+            fecha = row.getDate("fech_aplicacion");
+        }
+        return fecha;
     }
     
     //metodo que retorna el id de un examen
