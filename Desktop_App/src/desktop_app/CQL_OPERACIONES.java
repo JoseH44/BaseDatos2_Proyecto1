@@ -10,6 +10,7 @@ import com.github.cassandra.jdbc.internal.datastax.driver.core.ResultSet;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Row;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Session;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -75,11 +76,12 @@ public class CQL_OPERACIONES {
                 insert + ")");
     }
     
-    public static void insertarExamen(int idExamen, int idClase, int Cantpreguntas){
+    public static void insertarExamen(int idExamen, int idClase, int Cantpreguntas,String fechaAplicacion){
         String query = "";
-        query += idExamen + "," + idClase + "," + Cantpreguntas;
+        
+        query += idExamen + ",'" + fechaAplicacion+ "',"+ idClase +  "," + Cantpreguntas;
         System.out.println(query);
-        session.execute("INSERT INTO EXAMEN (ide, idclase, num_preguntas) VALUES (" +
+        session.execute("INSERT INTO EXAMEN (ide, fech_aplicacion, idclase, num_preguntas) VALUES (" +
                 query + ")");
     }
     

@@ -18,8 +18,10 @@ import com.github.cassandra.jdbc.internal.google.common.collect.Maps;
 import com.github.cassandra.jdbc.internal.google.common.reflect.TypeToken;
 import com.github.cassandra.jdbc.internal.jsqlparser.statement.Statement;
 import java.security.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -1258,12 +1260,17 @@ public class LogIn extends javax.swing.JFrame {
         CQL_OPERACIONES.IniciarConnection();
         CQL_OPERACIONES.IniciarSession("proyecto");
         int cantidadPreguntas = (int)jp_cantPreguntas_admin.getValue();
+        Date fechaAplicación = jdc_fechaAplicaciónAdmin.getDate();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateAplication = dateFormat.format(fechaAplicación);
+        //souts de prueba
+        System.out.println("FECHA:" + dateAplication);
         System.out.println("ID DE LA CLASE EN CREAR PREGUNTAS" + id_clase);
         int preguntasClase = CQL_OPERACIONES.lastID_CantPreguntasClase(id_clase);
         int idExamen = CQL_OPERACIONES.lastID_Examen();
         //validación que las preguntas son menor o igual que las que tiene la clase
-        if ((cantidadPreguntas <= preguntasClase) && (cantidadPreguntas > 1)) {
-            CQL_OPERACIONES.insertarExamen(idExamen, id_clase, cantidadPreguntas);
+        if ((cantidadPreguntas <= preguntasClase) && (cantidadPreguntas >= 1)) {
+            CQL_OPERACIONES.insertarExamen(idExamen, id_clase, cantidadPreguntas,dateAplication);
             JOptionPane.showMessageDialog(jd_crearExamen_admin, "¡Examen Creado Exitosamente!");
             jp_cantPreguntas_admin.setValue(0);
             CQL_OPERACIONES.endConnection();
