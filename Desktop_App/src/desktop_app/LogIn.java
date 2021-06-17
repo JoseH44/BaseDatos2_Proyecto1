@@ -119,6 +119,8 @@ public class LogIn extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jl_nombreClae_Examen_admin = new javax.swing.JLabel();
+        jdc_fechaAplicaciónAdmin = new com.toedter.calendar.JDateChooser();
+        jLabel19 = new javax.swing.JLabel();
         jd_mostrarExamen = new javax.swing.JDialog();
         jButton1 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
@@ -606,6 +608,8 @@ public class LogIn extends javax.swing.JFrame {
 
         jl_nombreClae_Examen_admin.setText("jLabel14");
 
+        jLabel19.setText("Fecha de Aplicación:");
+
         javax.swing.GroupLayout jd_crearExamen_adminLayout = new javax.swing.GroupLayout(jd_crearExamen_admin.getContentPane());
         jd_crearExamen_admin.getContentPane().setLayout(jd_crearExamen_adminLayout);
         jd_crearExamen_adminLayout.setHorizontalGroup(
@@ -614,15 +618,19 @@ public class LogIn extends javax.swing.JFrame {
                 .addGroup(jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jd_crearExamen_adminLayout.createSequentialGroup()
-                            .addGap(157, 157, 157)
-                            .addComponent(jLabel12)
-                            .addGap(45, 45, 45)
-                            .addComponent(jp_cantPreguntas_admin, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jd_crearExamen_adminLayout.createSequentialGroup()
                             .addGap(129, 129, 129)
                             .addComponent(jb_crearExamen)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jb_regresarAadmin_CE)))
+                            .addComponent(jb_regresarAadmin_CE))
+                        .addGroup(jd_crearExamen_adminLayout.createSequentialGroup()
+                            .addGap(157, 157, 157)
+                            .addGroup(jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel12)
+                                .addComponent(jLabel19))
+                            .addGap(45, 45, 45)
+                            .addGroup(jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jdc_fechaAplicaciónAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jp_cantPreguntas_admin, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jd_crearExamen_adminLayout.createSequentialGroup()
                         .addGap(114, 114, 114)
                         .addComponent(jLabel13)
@@ -637,14 +645,19 @@ public class LogIn extends javax.swing.JFrame {
                 .addGroup(jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jl_nombreClae_Examen_admin))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addGroup(jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jp_cantPreguntas_admin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addGap(51, 51, 51)
-                .addGroup(jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_crearExamen)
-                    .addComponent(jb_regresarAadmin_CE))
+                    .addComponent(jLabel12)
+                    .addComponent(jp_cantPreguntas_admin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_crearExamen_adminLayout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addGap(31, 31, 31)
+                        .addGroup(jd_crearExamen_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jb_crearExamen)
+                            .addComponent(jb_regresarAadmin_CE)))
+                    .addComponent(jdc_fechaAplicaciónAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(74, 74, 74))
         );
 
@@ -1667,6 +1680,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1707,6 +1721,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JDialog jd_mostrarExamen;
     private javax.swing.JDialog jd_mostrarPreguntas;
     private javax.swing.JDialog jd_registro;
+    private com.toedter.calendar.JDateChooser jdc_fechaAplicaciónAdmin;
     private javax.swing.JLabel jl_className;
     private javax.swing.JLabel jl_mostrarTitulo_Pregunta;
     private javax.swing.JLabel jl_nombreClae_Examen_admin;
