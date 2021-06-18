@@ -1173,6 +1173,8 @@ public class LogIn extends javax.swing.JFrame {
         
         CQL_OPERACIONES.IniciarConnection();
         CQL_OPERACIONES.IniciarSession("proyecto");
+        
+        //array con los id de los examenes de esa clase
         examenesDeClase = CQL_OPERACIONES.examenesDeLaClase(id_clase);
         
         boolean result = CQL_OPERACIONES.ExistsExamen(id_clase);

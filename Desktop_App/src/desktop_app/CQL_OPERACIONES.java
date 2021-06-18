@@ -10,8 +10,14 @@ import com.github.cassandra.jdbc.internal.datastax.driver.core.LocalDate;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.ResultSet;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Row;
 import com.github.cassandra.jdbc.internal.datastax.driver.core.Session;
+import com.github.cassandra.jdbc.internal.google.common.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import static javafx.scene.input.KeyCode.T;
 
 
 /**
@@ -204,9 +210,18 @@ public class CQL_OPERACIONES {
     
     public static ArrayList<Integer> examenesDeLaClase(int idClase) {
         ArrayList<Integer> set = new ArrayList<Integer>();
+        Set<Integer> hashSet = new HashSet<>();
+        ResultSet resultFind = session.execute("SELECT * FROM clase WHERE idclase = " +
+                            idClase + " ALLOW FILTERING");
+        //sacar el set de la clase
+        for (Row row : resultFind) {
+            hashSet = row.getSet("examenes", Integer.class);
+        }
         
+        //añadirlos al arraylist
+        for (int element : hashSet) {
+            set.add(element);
+        }
         return set;
     }
-    
-    
 }
