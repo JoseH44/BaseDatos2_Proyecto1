@@ -1145,21 +1145,20 @@ public class LogIn extends javax.swing.JFrame {
         id_clase = (int) model.getValueAt(jt_clases_admin.getSelectedRow(), 0);
         clase = (String) model.getValueAt(jt_clases_admin.getSelectedRow(), 1);
         jl_nombreClae_Examen_admin.setText(clase);
+        /*
         CQL_OPERACIONES.IniciarConnection();
         CQL_OPERACIONES.IniciarSession("proyecto");
-        boolean result = CQL_OPERACIONES.ExistsExamen(id_clase);
-        System.out.println("RESULTADO EN EL MAIN: " + result);
-        if (!result) {
-            CQL_OPERACIONES.endConnection();
-            jd_admin.setVisible(false);
-            jd_crearExamen_admin.pack();
-            jd_crearExamen_admin.setModal(true);
-            jd_crearExamen_admin.setLocationRelativeTo(jd_admin);
-            jd_crearExamen_admin.setVisible(true);
-        }else{
-            CQL_OPERACIONES.endConnection();
-            JOptionPane.showMessageDialog(jd_admin, "Esta Clase Ya Tiene un Examen");
-        }
+        boolean result = CQL_OPERACIONES.ExistsExamen(id_clase);*/
+        
+       
+            
+        jd_admin.setVisible(false);
+        jd_crearExamen_admin.pack();
+        jd_crearExamen_admin.setModal(true);
+        jd_crearExamen_admin.setLocationRelativeTo(jd_admin);
+        jd_crearExamen_admin.setVisible(true);
+        
+            
         
     }//GEN-LAST:event_jm_CrearExamenActionPerformed
 
@@ -1277,7 +1276,10 @@ public class LogIn extends javax.swing.JFrame {
         int idExamen = CQL_OPERACIONES.lastID_Examen();
         //validación que las preguntas son menor o igual que las que tiene la clase
         if ((cantidadPreguntas <= preguntasClase) && (cantidadPreguntas >= 1)) {
+            //query para insertar el examen en la tabla examen
             CQL_OPERACIONES.insertarExamen(idExamen, id_clase, cantidadPreguntas,dateAplication);
+            //query para insertar el examen en el set de examenes de la clase
+            CQL_OPERACIONES.insertExameninClass(id_clase, idExamen);
             JOptionPane.showMessageDialog(jd_crearExamen_admin, "¡Examen Creado Exitosamente!");
             jp_cantPreguntas_admin.setValue(0);
             CQL_OPERACIONES.endConnection();
@@ -1679,13 +1681,7 @@ public class LogIn extends javax.swing.JFrame {
         
     }
     
-    //query para meter el examen en el set de la clase
-    public static void insertExameninClass(Session session,int idClase,int idTest){
-        String query = "UPDATE clase SET examenes = examenes + ";
-        query += "{" + idTest + "} ";
-        query += "WHERE idclase = " + idClase;
-        session.execute(query);
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bg_respuesta_admin;

@@ -86,6 +86,14 @@ public class CQL_OPERACIONES {
                 query + ")");
     }
     
+    //query para meter el examen en el set de la clase
+    public static void insertExameninClass(int idClase,int idTest){
+        String query = "UPDATE clase SET examenes = examenes + ";
+        query += "{" + idTest + "} ";
+        query += "WHERE idclase = " + idClase;
+        session.execute(query);
+    }
+    
     //verificar login
     public static boolean foundUser(String user){
         boolean flag = false;
