@@ -126,12 +126,8 @@ public class LogIn extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jd_mostrarExamen = new javax.swing.JDialog();
         jButton1 = new javax.swing.JButton();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        ta_infoExamen_admin = new javax.swing.JTextArea();
-        jLabel20 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jt_TablaExamenesDeClase = new javax.swing.JTable();
         bg_respuesta_admin = new javax.swing.ButtonGroup();
         jd_mostrarPreguntas = new javax.swing.JDialog();
         jb_regresarAadmin_preguntas = new javax.swing.JButton();
@@ -665,6 +661,8 @@ public class LogIn extends javax.swing.JFrame {
                 .addGap(74, 74, 74))
         );
 
+        jd_mostrarExamen.setTitle("EXÁMENES");
+
         jButton1.setText("Aceptar");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -672,53 +670,51 @@ public class LogIn extends javax.swing.JFrame {
             }
         });
 
-        jLabel14.setText("ID del Examen:");
+        jt_TablaExamenesDeClase.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jLabel15.setText("ID de la Clase:");
+            },
+            new String [] {
+                "ID EXAMEN", "ID CLASE", "N° PREGUNTAS", "FECHA DE APLICACIÓN"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        jLabel16.setText("Cantidad de Preguntas:");
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        ta_infoExamen_admin.setEditable(false);
-        ta_infoExamen_admin.setColumns(20);
-        ta_infoExamen_admin.setRows(5);
-        jScrollPane3.setViewportView(ta_infoExamen_admin);
-
-        jLabel20.setText("Fecha de Aplicación:");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(jt_TablaExamenesDeClase);
 
         javax.swing.GroupLayout jd_mostrarExamenLayout = new javax.swing.GroupLayout(jd_mostrarExamen.getContentPane());
         jd_mostrarExamen.getContentPane().setLayout(jd_mostrarExamenLayout);
         jd_mostrarExamenLayout.setHorizontalGroup(
             jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_mostrarExamenLayout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addGroup(jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel20))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarExamenLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(209, 209, 209))
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addGroup(jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarExamenLayout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(209, 209, 209))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarExamenLayout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))))
         );
         jd_mostrarExamenLayout.setVerticalGroup(
             jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_mostrarExamenLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(jd_mostrarExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jd_mostrarExamenLayout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel15)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                        .addComponent(jLabel20))
-                    .addComponent(jScrollPane3))
-                .addGap(18, 18, 18)
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(16, 16, 16))
         );
@@ -1163,24 +1159,44 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_jm_CrearExamenActionPerformed
 
     private void jm_mostrarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_mostrarExamenActionPerformed
+        //setear el valor del arreglo.
+//        Object[] newRow = {idP,titulo,descripcion,respuesta};
+//            model2.addRow(newRow);
+        examenesDeClase = new ArrayList<>();
         //abrir ventana con un jlist enseñando las preguntas del exmamen.
-        //validación para ver si tiene examen
+        //agarro el id de la clase
         DefaultTableModel model = (DefaultTableModel)jt_clases_admin.getModel();
         id_clase = (int) model.getValueAt(jt_clases_admin.getSelectedRow(), 0);
         clase = (String) model.getValueAt(jt_clases_admin.getSelectedRow(), 1);
+        //TABLA DONDE SE MOSTRARAN LOS EXAMENES
+        DefaultTableModel modelView = (DefaultTableModel)jt_TablaExamenesDeClase.getModel();
         
         CQL_OPERACIONES.IniciarConnection();
         CQL_OPERACIONES.IniciarSession("proyecto");
+        examenesDeClase = CQL_OPERACIONES.examenesDeLaClase(id_clase);
         
         boolean result = CQL_OPERACIONES.ExistsExamen(id_clase);
-        int idE = CQL_OPERACIONES.idExamen(id_clase);
-        int cant_preguntas = CQL_OPERACIONES.cantPreguntasExamen(idE);
-        LocalDate date = CQL_OPERACIONES.fechaAplicacion(idE);
+        //id del examen que pertenece a esa clase
+        //int idE = CQL_OPERACIONES.idExamen(id_clase);
+        int idE;
+        //cantidad de preguntas de ese examen
+        //int cant_preguntas = CQL_OPERACIONES.cantPreguntasExamen(idE);
+        int cant_preguntas;
+        //LocalDate date = CQL_OPERACIONES.fechaAplicacion(idE);
+        LocalDate date = null;
+        
+        for (int i = 0; i < examenesDeClase.size(); i++) {
+            idE = examenesDeClase.get(i);
+            cant_preguntas = CQL_OPERACIONES.cantPreguntasExamen(idE);
+            date = CQL_OPERACIONES.fechaAplicacion(idE);
+            Object[] newRow = {idE,id_clase,cant_preguntas,date};
+            modelView.addRow(newRow);
+            
+        }
+        jt_TablaExamenesDeClase.setModel(modelView);
        
         if (result) {
             CQL_OPERACIONES.endConnection();
-            ta_infoExamen_admin.setText(idE + "\n\n" + id_clase +
-                    "\n\n" + cant_preguntas + "\n\n" + date);
             jd_admin.setVisible(false);
             jd_mostrarExamen.pack();
             jd_mostrarExamen.setModal(true);
@@ -1206,6 +1222,29 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_regresarAadmin_CEMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+         jt_TablaExamenesDeClase.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID EXAMEN", "ID CLASE", "N° PREGUNTAS", "FECHA DE APLICACIÓN"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jd_mostrarExamen.dispose();
         jd_admin.setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
@@ -1694,14 +1733,10 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1713,7 +1748,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
@@ -1755,6 +1790,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JPasswordField jp_contrasena_login;
     private javax.swing.JPasswordField jp_contrasena_registro;
     private javax.swing.JPopupMenu jpm_opcionesClase_admin;
+    private javax.swing.JTable jt_TablaExamenesDeClase;
     private javax.swing.JTable jt_clases_admin;
     private javax.swing.JTable jt_examenesAlumno;
     private javax.swing.JTable jt_misCalificaciones;
@@ -1764,7 +1800,6 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JRadioButton rb_respuestaEnExamenF;
     private javax.swing.JRadioButton rb_verdadero_admin;
     private javax.swing.JTextArea ta_descripcion_admin;
-    private javax.swing.JTextArea ta_infoExamen_admin;
     private javax.swing.JTextArea ta_mostrarContenidoPregunta;
     private javax.swing.JTextField tf_apellidos_registrar;
     private javax.swing.JTextField tf_login_username;
@@ -1785,4 +1820,6 @@ int counterQ = 0;
 int calificaciónGlobal = 0;
 String Clase_alumno;
 boolean started;
+ArrayList<Integer> examenesDeClase = new ArrayList<>();
+
 }

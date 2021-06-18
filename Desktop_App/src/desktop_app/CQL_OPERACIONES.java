@@ -202,5 +202,11 @@ public class CQL_OPERACIONES {
         return result;
     }
     
+    public static ArrayList<Integer> examenesDeLaClase(int idClase) {
+        ArrayList<Integer> set = new ArrayList<Integer>();
+        
+        return set;
+    }
+    
     
 }
