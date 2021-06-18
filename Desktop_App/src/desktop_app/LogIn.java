@@ -1654,6 +1654,7 @@ public class LogIn extends javax.swing.JFrame {
         session.execute("INSERT INTO CLASE (idclase, nombreclase) VALUES (" + insert + ")");
     }
     
+    //query para meter la nota de un examen en el alumno
     public static void insertNota(Session session, int idAlumno, int idExamen, int nota){
         
         String query = "UPDATE alumno SET resultados_examenes = resultados_examenes + ";
@@ -1676,6 +1677,14 @@ public class LogIn extends javax.swing.JFrame {
         
         //QueryBuilder.put("resultados_examenes", idExamen, nota);
         
+    }
+    
+    //query para meter el examen en el set de la clase
+    public static void insertExameninClass(Session session,int idClase,int idTest){
+        String query = "UPDATE clase SET examenes = examenes + ";
+        query += "{" + idTest + "} ";
+        query += "WHERE idclase = " + idClase;
+        session.execute(query);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
