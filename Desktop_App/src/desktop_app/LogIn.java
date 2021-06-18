@@ -1488,6 +1488,7 @@ public class LogIn extends javax.swing.JFrame {
         String tituloP,descripciónP;
         
         int idPregunta = id_ClaseList.get(counterQ);
+        idPrefuntasGuardar.add(idPregunta);
         System.out.println("PRIMER COUNTER: " + counterQ);
         System.out.println("PRIMER ID_PREGUNTA: " + idPregunta);
         ResultSet results2 = session.execute("SELECT * FROM preguntas WHERE idp = " +
@@ -1498,10 +1499,12 @@ public class LogIn extends javax.swing.JFrame {
                 tituloP = rowP.getString("titulo");
                 descripciónP = rowP.getString("descripcion");
                 respuestaP = rowP.getBool("respuesta");
+               
                 if (rb_RespuestaEnExamenV.isSelected())
                     respuestaA = true;
                 else
                     respuestaA = false;
+                respuestasAguardar.add(respuestaA);
                 jl_mostrarTitulo_Pregunta.setText(tituloP);
                 ta_mostrarContenidoPregunta.setText(descripciónP);
                 System.out.println("PRUEBA DENTRO DE EXAMEN:" + tituloP + " " + descripciónP);
@@ -1541,7 +1544,7 @@ public class LogIn extends javax.swing.JFrame {
             //consulta para meterlo a la base de datos
             cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
             session = cluster.connect("proyecto");
-            session.execute("INSERT INTO CLASE (idclase,nombreclase) VALUES (" + 50 + ",'prueba')");
+            //session.execute("INSERT INTO CLASE (idclase,nombreclase) VALUES (" + 50 + ",'prueba')");
             insertNota(session, idAlumn, id_ExamenGlobal, calificaciónGlobal);
             //meter datos a la tabla
             Object[] newRow = {id_ExamenGlobal,Clase_alumno,calificaciónGlobal};
@@ -1552,6 +1555,8 @@ public class LogIn extends javax.swing.JFrame {
             session.close();
             cluster.close();
             counterQ = 0;
+            System.out.println("ID DE LAS PREGUNTAS A GUARDAR DEL EXAMEN: " + idPrefuntasGuardar);
+            System.out.println("RESULTADOSDE LAS PREGUNTAS A GUARDAR DEL EXAMEN: " + respuestasAguardar);
             jd_hacerExamen.dispose();
             jd_alumno.setVisible(true);
         }
@@ -1565,11 +1570,15 @@ public class LogIn extends javax.swing.JFrame {
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
         session = cluster.connect("proyecto");
+        //setear el arraylist de preguntas
+        idPrefuntasGuardar = new ArrayList<>();
+        
         
         boolean respuestaP,respuestaA;
         String tituloP,descripciónP;
         if (counterQ == 0) {
             int idPregunta = id_ClaseList.get(counterQ);
+            
             ResultSet results2 = session.execute("SELECT * FROM preguntas WHERE idp = " +
                 idPregunta + " ALLOW FILTERING");
             
@@ -1707,19 +1716,15 @@ public class LogIn extends javax.swing.JFrame {
         BoundStatement boundStatement = preparedStatement.bind("alumno");
         session.execute(boundStatement);*/
         session.execute(query);
-        /*Map<Integer,Integer> map = Maps.newHashMap();
-        map.put(idExamen, nota);*/
-        //Update update = QueryBuilder.update("proyecto", "alumno");
         
-        /*Statement updateMap = (Statement) QueryBuilder.update("alumno").with(QueryBuilder.put("resultados_examenes", idExamen, nota)).where(eq("ida", idAlumno));
-        System.out.println(updateMap);
-        session.execute((com.github.cassandra.jdbc.internal.datastax.driver.core.Statement) updateMap);*/
-        
-        /*Update update = QueryBuilder.update("proyecto", "alumno");
-        update.with(QueryBuilder.put("resultados_examenes", idExamen, nota)).where(eq("ida", idAlumno));*/
-        
-        //QueryBuilder.put("resultados_examenes", idExamen, nota);
-        
+    }
+    
+    public static void insertQuestionAndResult(Session session, int idAlumno, int idPregunta, boolean respuesta){
+        //query para agregar al map collection las respuestas de las preguntas del examen
+        String query = "UPDATE alumno SET mis_respuestas = mis_respuestas + ";
+        query += "{" + idPregunta + ":" + respuesta + "} ";
+        query += "WHERE ida = " + idAlumno;
+        session.execute(query);
     }
     
     
@@ -1823,5 +1828,7 @@ int calificaciónGlobal = 0;
 String Clase_alumno;
 boolean started;
 ArrayList<Integer> examenesDeClase = new ArrayList<>();
+ArrayList<Boolean> respuestasAguardar = new ArrayList<>();
+ArrayList<Integer> idPrefuntasGuardar = new ArrayList<>();
 
 }
