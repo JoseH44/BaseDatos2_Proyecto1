@@ -1552,9 +1552,14 @@ public class LogIn extends javax.swing.JFrame {
             jt_misCalificaciones.setModel(modelC);
             ta_mostrarContenidoPregunta.setText("");
             jl_mostrarTitulo_Pregunta.setText("");
+            //consulta para guardar en el map del alumno
+            for (int i = 0; i < idPrefuntasGuardar.size(); i++) {
+                insertQuestionAndResult(session, idAlumn, idPrefuntasGuardar.get(i), respuestasAguardar.get(i));
+            }
             session.close();
             cluster.close();
             counterQ = 0;
+            
             System.out.println("ID DE LAS PREGUNTAS A GUARDAR DEL EXAMEN: " + idPrefuntasGuardar);
             System.out.println("RESULTADOSDE LAS PREGUNTAS A GUARDAR DEL EXAMEN: " + respuestasAguardar);
             jd_hacerExamen.dispose();
