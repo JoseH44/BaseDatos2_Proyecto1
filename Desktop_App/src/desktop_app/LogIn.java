@@ -146,6 +146,11 @@ public class LogIn extends javax.swing.JFrame {
         rb_respuestaEnExamenF = new javax.swing.JRadioButton();
         jButton3 = new javax.swing.JButton();
         bg_respuestasAlumno = new javax.swing.ButtonGroup();
+        jd_verRespuestas = new javax.swing.JDialog();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jt_misRespuestas = new javax.swing.JTable();
+        jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_login_username = new javax.swing.JTextField();
@@ -386,6 +391,11 @@ public class LogIn extends javax.swing.JFrame {
         jScrollPane7.setViewportView(jt_misCalificaciones);
 
         jButton4.setText("Ver Respuestas");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -876,6 +886,72 @@ public class LogIn extends javax.swing.JFrame {
                     .addComponent(jb_siguiente)
                     .addComponent(jButton3))
                 .addGap(28, 28, 28))
+        );
+
+        jd_verRespuestas.setTitle("RESPUESTAS");
+
+        jLabel14.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
+        jLabel14.setText("Mis Respuestas");
+
+        jt_misRespuestas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "PREGUNTA", "MI RESPUESTA", "RESPUESTA CORRECTA"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jt_misRespuestas);
+
+        jButton5.setText("Regresar");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jd_verRespuestasLayout = new javax.swing.GroupLayout(jd_verRespuestas.getContentPane());
+        jd_verRespuestas.getContentPane().setLayout(jd_verRespuestasLayout);
+        jd_verRespuestasLayout.setHorizontalGroup(
+            jd_verRespuestasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_verRespuestasLayout.createSequentialGroup()
+                .addGroup(jd_verRespuestasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_verRespuestasLayout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jd_verRespuestasLayout.createSequentialGroup()
+                        .addGap(256, 256, 256)
+                        .addComponent(jLabel14))
+                    .addGroup(jd_verRespuestasLayout.createSequentialGroup()
+                        .addGap(262, 262, 262)
+                        .addComponent(jButton5)))
+                .addContainerGap(83, Short.MAX_VALUE))
+        );
+        jd_verRespuestasLayout.setVerticalGroup(
+            jd_verRespuestasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_verRespuestasLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel14)
+                .addGap(62, 62, 62)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(jButton5)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1515,6 +1591,7 @@ public class LogIn extends javax.swing.JFrame {
                 else
                     respuestaA = false;
                 respuestasAguardar.add(respuestaA);
+                respuestasCorrectas.add(respuestaP);
                 jl_mostrarTitulo_Pregunta.setText(tituloP);
                 ta_mostrarContenidoPregunta.setText(descripciónP);
                 questions.add(descripciónP);
@@ -1617,6 +1694,52 @@ public class LogIn extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(jd_hacerExamen, "Ya Había Iniciado este Examen");
         }
     }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        DefaultTableModel modelAnswers = (DefaultTableModel)jt_misRespuestas.getModel();
+        if (jt_misCalificaciones.getSelectedRow() >= 0) {
+            for (int i = 0; i < questions.size(); i++) {
+                Object[] newRow = {questions.get(i),respuestasAguardar.get(i),respuestasCorrectas};
+                modelAnswers.addRow(newRow);
+            }
+            jt_misRespuestas.setModel(modelAnswers);
+            jd_alumno.setVisible(false);
+            jd_verRespuestas.pack();
+            jd_verRespuestas.setModal(true);
+            jd_verRespuestas.setLocationRelativeTo(jd_alumno);
+            jd_verRespuestas.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(jd_alumno, "Debe seleccionar el examen de la tabla");
+        }
+    }//GEN-LAST:event_jButton4MouseClicked
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+        jt_misRespuestas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "PREGUNTA", "MI RESPUESTA", "RESPUESTA CORRECTA"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jd_verRespuestas.dispose();
+        jd_alumno.setVisible(true);
+    }//GEN-LAST:event_jButton5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1754,11 +1877,13 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1774,6 +1899,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -1802,6 +1928,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JDialog jd_mostrarExamen;
     private javax.swing.JDialog jd_mostrarPreguntas;
     private javax.swing.JDialog jd_registro;
+    private javax.swing.JDialog jd_verRespuestas;
     private com.toedter.calendar.JDateChooser jdc_fechaAplicaciónAdmin;
     private javax.swing.JLabel jl_className;
     private javax.swing.JLabel jl_mostrarTitulo_Pregunta;
@@ -1820,6 +1947,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JTable jt_clases_admin;
     private javax.swing.JTable jt_examenesAlumno;
     private javax.swing.JTable jt_misCalificaciones;
+    private javax.swing.JTable jt_misRespuestas;
     private javax.swing.JTable jt_showPreguntas;
     private javax.swing.JRadioButton rb_RespuestaEnExamenV;
     private javax.swing.JRadioButton rb_falso_admin;
@@ -1848,6 +1976,7 @@ String Clase_alumno;
 boolean started;
 ArrayList<Integer> examenesDeClase = new ArrayList<>();
 ArrayList<Boolean> respuestasAguardar = new ArrayList<>();
+ArrayList<Boolean> respuestasCorrectas = new ArrayList<>();
 ArrayList<Integer> idPrefuntasGuardar = new ArrayList<>();
 ArrayList<String> questions = new ArrayList<>();
 
