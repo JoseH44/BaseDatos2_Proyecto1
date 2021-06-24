@@ -93,6 +93,7 @@ public class LogIn extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jt_misCalificaciones = new javax.swing.JTable();
+        jButton4 = new javax.swing.JButton();
         jd_AgregarClase = new javax.swing.JDialog();
         jLabel8 = new javax.swing.JLabel();
         tf_nombreClase_admin = new javax.swing.JTextField();
@@ -384,13 +385,20 @@ public class LogIn extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(jt_misCalificaciones);
 
+        jButton4.setText("Ver Respuestas");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(228, 228, 228)
+                        .addComponent(jButton4)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -398,7 +406,9 @@ public class LogIn extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton4)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("MIS EXAMENES", jPanel2);
@@ -1507,6 +1517,7 @@ public class LogIn extends javax.swing.JFrame {
                 respuestasAguardar.add(respuestaA);
                 jl_mostrarTitulo_Pregunta.setText(tituloP);
                 ta_mostrarContenidoPregunta.setText(descripciónP);
+                questions.add(descripciónP);
                 System.out.println("PRUEBA DENTRO DE EXAMEN:" + tituloP + " " + descripciónP);
                 if(respuestaA == respuestaP)
                     calificaciónGlobal += 5;
@@ -1577,6 +1588,8 @@ public class LogIn extends javax.swing.JFrame {
         session = cluster.connect("proyecto");
         //setear el arraylist de preguntas
         idPrefuntasGuardar = new ArrayList<>();
+        questions = new ArrayList<>();
+        respuestasAguardar = new ArrayList<>();
         
         
         boolean respuestaP,respuestaA;
@@ -1740,6 +1753,7 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1835,5 +1849,6 @@ boolean started;
 ArrayList<Integer> examenesDeClase = new ArrayList<>();
 ArrayList<Boolean> respuestasAguardar = new ArrayList<>();
 ArrayList<Integer> idPrefuntasGuardar = new ArrayList<>();
+ArrayList<String> questions = new ArrayList<>();
 
 }
